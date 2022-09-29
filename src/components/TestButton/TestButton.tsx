@@ -6,7 +6,20 @@ export interface TestButtonProps {
 }
 
 const TestButton = (props: TestButtonProps) => {
-  return <button className="testButton">{props.label}</button>;
+  return (
+    <div>
+      <button className="testButton">{props.label}</button>
+      <svg width="200" height="200">
+        <rect
+          id="svgTestRect"
+          width="180"
+          height="90"
+          fill="orange"
+          stroke="blue"
+        />
+      </svg>
+    </div>
+  );
 };
 
 export default TestButton;
