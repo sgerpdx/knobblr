@@ -1,6 +1,7 @@
 {
   "name": "@sgerpdx/knobblr",
   "publishConfig": {
+    "cache": "cache/.npm",
     "registry": "https://npm.pkg.github.com/sgerpdx"
   },
   "version": "1.0.0",
