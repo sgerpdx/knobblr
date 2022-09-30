@@ -1,4 +1,4 @@
-const calculateButtonDimensions = (width: number) => {
+export const calculateButtonDimensions = (width: number) => {
   // Compute button dimensions and coordinates based on user-input width property:
   const containerHeight = Math.round(width * (3 / 4));
   const height = containerHeight / 2;
@@ -27,4 +27,4 @@ const calculateButtonDimensions = (width: number) => {
   ];
 };
 
-module.exports = { calculateButtonDimensions };
+//module.exports = { calculateButtonDimensions };
