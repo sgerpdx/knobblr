@@ -53,27 +53,31 @@ const TactileButton = (props: TactileButtonProps) => {
       <svg width={dimensions.width} height={dimensions.containerHeight}>
         <defs>
           <linearGradient id="gradient-lower">
-            <stop offset="4%" stop-color="#0000B3" />
-            <stop offset="10%" stop-color="#0000CC" />
-            <stop offset="90%" stop-color="#0000CC" />
-            <stop offset="95%" stop-color="#0000B3" />
+            <stop offset="5%" stop-color="#0000E6" />
+            <stop offset="7%" stop-color="#0000FF" />
+            <stop offset="10%" stop-color="#1A1AFF" />
+            <stop offset="90%" stop-color="#1A1AFF" />
+            <stop offset="93%" stop-color="#0000FF" />
+            <stop offset="96%" stop-color="#0000E6" />
           </linearGradient>
           <linearGradient id="gradient-middle">
-            <stop offset="5%" stop-color="#0000E6" />
-            <stop offset="10%" stop-color="#0000FF" />
-            <stop offset="90%" stop-color="#0000FF" />
-            <stop offset="95%" stop-color="#0000E6" />
+            <stop offset="5%" stop-color="#1A1AFF" />
+            <stop offset="10%" stop-color="#3333FF" />
+            <stop offset="90%" stop-color="#3333FF" />
+            <stop offset="95%" stop-color="#1A1AFF" />
           </linearGradient>
         </defs>
-        <rect
-          x="0"
-          y={dimensions.height}
-          width={dimensions.width}
-          height={dimensions.height}
-          z-index="0"
-          fill="url(#gradient-lower)"
-          className="buttonLower"
-        ></rect>
+        <g id="base">
+          <rect
+            x="0"
+            y={dimensions.height}
+            width={dimensions.width}
+            height={dimensions.height}
+            z-index="0"
+            fill="url(#gradient-lower)"
+            className="buttonLower"
+          ></rect>
+        </g>
         <g id="top">
           <rect
             x="0"
@@ -82,6 +86,7 @@ const TactileButton = (props: TactileButtonProps) => {
             height={dimensions.height}
             z-index="1"
             fill="url(#gradient-middle)"
+            rx={dimensions.borderRadius}
             className="buttonMiddle"
           ></rect>
           <rect
@@ -90,7 +95,8 @@ const TactileButton = (props: TactileButtonProps) => {
             width={dimensions.topWidth}
             height={dimensions.topHeight}
             z-index="2"
-            fill="#7F7FFF"
+            fill="#4D4DFF"
+            rx={dimensions.borderRadius}
             className="buttonUpper"
           ></rect>
           <text
