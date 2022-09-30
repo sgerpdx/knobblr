@@ -67,17 +67,17 @@ const TactileButton = (props: TactileButtonProps) => {
             <stop offset="95%" stop-color="#1A1AFF" />
           </linearGradient>
         </defs>
-        <g id="base">
-          <rect
-            x="0"
-            y={dimensions.height}
-            width={dimensions.width}
-            height={dimensions.height}
-            z-index="0"
-            fill="url(#gradient-lower)"
-            className="buttonLower"
-          ></rect>
-        </g>
+
+        <rect
+          x="0"
+          y={dimensions.height}
+          width={dimensions.width}
+          height={dimensions.height}
+          z-index="0"
+          fill="url(#gradient-lower)"
+          className="buttonLower"
+        ></rect>
+
         <g id="top">
           <rect
             x="0"

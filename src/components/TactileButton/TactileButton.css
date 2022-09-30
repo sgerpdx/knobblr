@@ -10,3 +10,8 @@
   transform: translate(0px, 12px);
   transition-duration: 0.25s;
 }
+
+.buttonLabel {
+  cursor: pointer;
+  pointer-events: none;
+}
