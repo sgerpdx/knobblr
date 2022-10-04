@@ -5,7 +5,8 @@ export const calculateButtonDimensions = (width: number) => {
   const travel = Math.round(height * (2 / 3));
   const topWidth = width - 4;
   const topHeight = height - 4;
-  const borderRadius = Math.round(width * 0.05);
+  const borderRadiusTop = Math.round(width * 0.05);
+  const borderRadiusMiddle = Math.round(width * 0.075);
   const xOffset = width - 2;
   const yOffset = Math.round(containerHeight * (1 / 12));
   const labelX = width * 0.5;
@@ -19,7 +20,8 @@ export const calculateButtonDimensions = (width: number) => {
     travel,
     topWidth,
     topHeight,
-    borderRadius,
+    borderRadiusTop,
+    borderRadiusMiddle,
     xOffset,
     yOffset,
     labelX,

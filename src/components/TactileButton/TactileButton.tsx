@@ -27,23 +27,24 @@ const TactileButton = (props: TactileButtonProps) => {
     travel: 20,
     topWidth: 76,
     topHeight: 26,
-    borderRadius: 4,
+    borderRadiusTop: 4,
+    borderRadiusMiddle: 6,
     xOffset: 2,
     yOffset: 5,
     labelX: 40,
     labelY: 24,
   });
-  const [topColor, setTopColor] = useState(props.fillColor);
+  //const [topColor, setTopColor] = useState(props.fillColor);
   const [colors, setColors] = useState([
-    "#0000B3",
-    "#0000CC",
     "#0000E6",
     "#1A1AFF",
+    "#3333FF",
+    "#4D4DFF",
   ]);
 
   useEffect(() => {
+    // shape
     const newDimensions = calculateButtonDimensions(props.width);
-
     setDimensions({
       width: newDimensions[0],
       containerHeight: newDimensions[1],
@@ -51,17 +52,18 @@ const TactileButton = (props: TactileButtonProps) => {
       travel: newDimensions[3],
       topWidth: newDimensions[4],
       topHeight: newDimensions[5],
-      borderRadius: newDimensions[6],
-      xOffset: newDimensions[7],
-      yOffset: newDimensions[8],
-      labelX: newDimensions[9],
-      labelY: newDimensions[10],
+      borderRadiusTop: newDimensions[6],
+      borderRadiusMiddle: newDimensions[7],
+      xOffset: newDimensions[8],
+      yOffset: newDimensions[9],
+      labelX: newDimensions[10],
+      labelY: newDimensions[11],
     });
 
     // color
     const newFill = props.fillColor;
     const rgbFill = convertHexToRGB(newFill);
-    setTopColor(rgbFill[1]);
+    //setTopColor(rgbFill[1]);
     const colorVariationsArr = generateShadingPalette(rgbFill[0]);
     // this code is extremely clunky -- there was a previous utils issue that this was temporarily accounting for; said issue needs to be investigated further and fixed
     setColors([
@@ -122,7 +124,7 @@ const TactileButton = (props: TactileButtonProps) => {
           y={dimensions.height}
           width={dimensions.width}
           height={dimensions.height}
-          z-index="0"
+          z-index="1"
           fill="url(#gradient-lower)"
           className="buttonLower"
         ></rect>
@@ -133,9 +135,9 @@ const TactileButton = (props: TactileButtonProps) => {
             y={dimensions.yOffset}
             width={dimensions.width}
             height={dimensions.height}
-            z-index="1"
+            z-index="2"
             fill="url(#gradient-middle)"
-            rx={dimensions.borderRadius}
+            rx={dimensions.borderRadiusMiddle}
             className="buttonMiddle"
           ></rect>
           <rect
@@ -143,9 +145,9 @@ const TactileButton = (props: TactileButtonProps) => {
             y={dimensions.yOffset}
             width={dimensions.topWidth}
             height={dimensions.topHeight}
-            z-index="2"
+            z-index="3"
             fill={colors[3]}
-            rx={dimensions.borderRadius}
+            rx={dimensions.borderRadiusTop}
             className="buttonUpper"
           ></rect>
           <text
@@ -153,7 +155,7 @@ const TactileButton = (props: TactileButtonProps) => {
             x={dimensions.labelX}
             y={dimensions.labelY}
             stroke={props.strokeColor}
-            z-index="3"
+            z-index="4"
             text-anchor="middle"
           >
             {props.label}
