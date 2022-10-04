@@ -46,7 +46,7 @@ export const adjustColor = (rgbArr: number[], increment: number) => {
 
 export const generateShadingPalette = (rgbArr: number[]) => {
   // return an array of lighter and/or darker shades of input color to use in 3D shading effects
-  const percentageArray = [-0.1, 0.05, 0.1, 0.2];
+  const percentageArray = [-0.1, 0.05, 0.1, 0.125];
   let colorArray: any = [];
   for (let i = 0; i < percentageArray.length; i++) {
     //
