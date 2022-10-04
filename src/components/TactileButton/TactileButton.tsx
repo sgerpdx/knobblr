@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./TactileButton.css";
 import { calculateButtonDimensions } from "../../utils/tactileButtonUtils/shapeCalculation";
+import {
+  convertHexToRGB,
+  adjustColor,
+  generateShadingPalette,
+} from "../../utils/tactileButtonUtils/colorCalculation";
 
 export interface TactileButtonProps {
   width: number;
@@ -28,6 +33,13 @@ const TactileButton = (props: TactileButtonProps) => {
     labelX: 40,
     labelY: 24,
   });
+  const [topColor, setTopColor] = useState(props.fillColor);
+  const [colors, setColors] = useState([
+    "#0000B3",
+    "#0000CC",
+    "#0000E6",
+    "#1A1AFF",
+  ]);
 
   useEffect(() => {
     const newDimensions = calculateButtonDimensions(props.width);
@@ -45,6 +57,43 @@ const TactileButton = (props: TactileButtonProps) => {
       labelX: newDimensions[9],
       labelY: newDimensions[10],
     });
+
+    // color
+    const newFill = props.fillColor;
+    const rgbFill = convertHexToRGB(newFill);
+    setTopColor(rgbFill[1]);
+    const colorVariationsArr = generateShadingPalette(rgbFill[0]);
+    // this code is extremely clunky -- there was a previous utils issue that this was temporarily accounting for; said issue needs to be investigated further and fixed
+    setColors([
+      "rgb(" +
+        colorVariationsArr[0][0] +
+        "," +
+        colorVariationsArr[0][1] +
+        "," +
+        colorVariationsArr[0][2] +
+        ")",
+      "rgb(" +
+        colorVariationsArr[1][0] +
+        "," +
+        colorVariationsArr[1][1] +
+        "," +
+        colorVariationsArr[1][2] +
+        ")",
+      "rgb(" +
+        colorVariationsArr[2][0] +
+        "," +
+        colorVariationsArr[2][1] +
+        "," +
+        colorVariationsArr[2][2] +
+        ")",
+      "rgb(" +
+        colorVariationsArr[3][0] +
+        "," +
+        colorVariationsArr[3][1] +
+        "," +
+        colorVariationsArr[3][2] +
+        ")",
+    ]);
   });
 
   return (
@@ -53,18 +102,18 @@ const TactileButton = (props: TactileButtonProps) => {
       <svg width={dimensions.width} height={dimensions.containerHeight}>
         <defs>
           <linearGradient id="gradient-lower">
-            <stop offset="5%" stop-color="#0000E6" />
-            <stop offset="7%" stop-color="#0000FF" />
-            <stop offset="10%" stop-color="#1A1AFF" />
-            <stop offset="90%" stop-color="#1A1AFF" />
-            <stop offset="93%" stop-color="#0000FF" />
-            <stop offset="96%" stop-color="#0000E6" />
+            <stop offset="5%" stop-color={colors[0]} />
+            <stop offset="7%" stop-color={props.fillColor} />
+            <stop offset="10%" stop-color={colors[1]} />
+            <stop offset="90%" stop-color={colors[1]} />
+            <stop offset="93%" stop-color={props.fillColor} />
+            <stop offset="96%" stop-color={colors[0]} />
           </linearGradient>
           <linearGradient id="gradient-middle">
-            <stop offset="5%" stop-color="#1A1AFF" />
-            <stop offset="10%" stop-color="#3333FF" />
-            <stop offset="90%" stop-color="#3333FF" />
-            <stop offset="95%" stop-color="#1A1AFF" />
+            <stop offset="5%" stop-color={colors[1]} />
+            <stop offset="10%" stop-color={colors[2]} />
+            <stop offset="90%" stop-color={colors[2]} />
+            <stop offset="95%" stop-color={colors[1]} />
           </linearGradient>
         </defs>
 
@@ -95,7 +144,7 @@ const TactileButton = (props: TactileButtonProps) => {
             width={dimensions.topWidth}
             height={dimensions.topHeight}
             z-index="2"
-            fill="#4D4DFF"
+            fill={colors[3]}
             rx={dimensions.borderRadius}
             className="buttonUpper"
           ></rect>
