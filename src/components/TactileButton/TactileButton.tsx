@@ -80,7 +80,7 @@ const TactileButton = (props: TactileButtonProps) => {
 
     //
     setLoading(false);
-  });
+  }, []);
 
   if (loading) return <span>loading...</span>;
 
@@ -89,18 +89,18 @@ const TactileButton = (props: TactileButtonProps) => {
       <svg width={dimensions.width} height={dimensions.containerHeight}>
         <defs>
           <linearGradient id={uniqueIDs[0]}>
-            <stop offset="5%" stop-color={colors[0]} />
-            <stop offset="7%" stop-color={props.fillColor} />
-            <stop offset="10%" stop-color={colors[1]} />
-            <stop offset="90%" stop-color={colors[1]} />
-            <stop offset="93%" stop-color={props.fillColor} />
-            <stop offset="96%" stop-color={colors[0]} />
+            <stop offset="5%" stopColor={colors[0]} />
+            <stop offset="7%" stopColor={props.fillColor} />
+            <stop offset="10%" stopColor={colors[1]} />
+            <stop offset="90%" stopColor={colors[1]} />
+            <stop offset="93%" stopColor={props.fillColor} />
+            <stop offset="96%" stopColor={colors[0]} />
           </linearGradient>
           <linearGradient id={uniqueIDs[1]}>
-            <stop offset="5%" stop-color={colors[1]} />
-            <stop offset="10%" stop-color={colors[2]} />
-            <stop offset="90%" stop-color={colors[2]} />
-            <stop offset="95%" stop-color={colors[1]} />
+            <stop offset="5%" stopColor={colors[1]} />
+            <stop offset="10%" stopColor={colors[2]} />
+            <stop offset="90%" stopColor={colors[2]} />
+            <stop offset="95%" stopColor={colors[1]} />
           </linearGradient>
         </defs>
 
@@ -112,6 +112,7 @@ const TactileButton = (props: TactileButtonProps) => {
           z-index="1"
           fill={uniqueIDs[2]}
           className="buttonLower"
+          id="rect-lower"
         ></rect>
 
         <g id="top">
@@ -124,6 +125,7 @@ const TactileButton = (props: TactileButtonProps) => {
             fill={uniqueIDs[3]}
             rx={dimensions.borderRadiusMiddle}
             className="buttonMiddle"
+            id="rect-middle"
           ></rect>
           <rect
             x={dimensions.xOffset}
@@ -134,18 +136,20 @@ const TactileButton = (props: TactileButtonProps) => {
             fill={colors[3]}
             rx={dimensions.borderRadiusTop}
             className="buttonUpper"
+            id="rect-upper"
           ></rect>
           <text
             className="buttonLabel"
             x={dimensions.labelX}
             y={dimensions.labelY}
             z-index="4"
-            font-family="monospace"
-            font-size={dimensions.fontSize}
-            font-weight="bold"
-            text-anchor="middle"
+            fontFamily="monospace"
+            fontSize={dimensions.fontSize}
+            fontWeight="bold"
+            textAnchor="middle"
             stroke="none"
             fill={props.strokeColor}
+            id="label-text"
           >
             {props.label}
           </text>

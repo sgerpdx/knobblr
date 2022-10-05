@@ -57,7 +57,6 @@ export const generateShadingPalette = (rgbArr: number[]) => {
 
     //
     colorArray.push(colorSubArray);
-    console.log("new color variations:", colorArray);
   }
   return colorArray; // This should be an array of arrays of all numbers
 };
