@@ -1,0 +1,17 @@
+.tactileButton {
+  border-radius: 4px;
+}
+
+#top:hover {
+  transform: translate(0px, 1px);
+}
+
+#top:active {
+  transform: translate(0px, 12px);
+  transition-duration: 0.25s;
+}
+
+.buttonLabel {
+  cursor: pointer;
+  pointer-events: none;
+}
