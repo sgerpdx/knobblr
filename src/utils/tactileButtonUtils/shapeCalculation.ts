@@ -11,6 +11,7 @@ export const calculateButtonDimensions = (width: number) => {
   const yOffset = Math.round(containerHeight * (1 / 8));
   const labelX = width * 0.5;
   const labelY = containerHeight * 0.43;
+  const fontSize = width * 0.16;
 
   // Return dimensions as simple array:
   return [
@@ -26,7 +27,6 @@ export const calculateButtonDimensions = (width: number) => {
     yOffset,
     labelX,
     labelY,
+    fontSize,
   ];
 };
-
-//module.exports = { calculateButtonDimensions };

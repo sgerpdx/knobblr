@@ -40,6 +40,7 @@ const TactileButton = (props: TactileButtonProps) => {
     yOffset: 5,
     labelX: 40,
     labelY: 24,
+    fontSize: 16,
   });
   const [colors, setColors] = useState([
     "#0000E6",
@@ -64,42 +65,17 @@ const TactileButton = (props: TactileButtonProps) => {
       yOffset: newDimensions[9],
       labelX: newDimensions[10],
       labelY: newDimensions[11],
+      fontSize: newDimensions[12],
     });
 
     // color
-    const newFill = props.fillColor;
-    const rgbFill = convertHexToRGB(newFill);
+    const rgbFill = convertHexToRGB(props.fillColor);
     const colorVariationsArr = generateShadingPalette(rgbFill[0]);
-    // this code is extremely clunky -- there was a previous utils issue that this was temporarily accounting for; said issue needs to be investigated further and fixed
     setColors([
-      "rgb(" +
-        colorVariationsArr[0][0] +
-        "," +
-        colorVariationsArr[0][1] +
-        "," +
-        colorVariationsArr[0][2] +
-        ")",
-      "rgb(" +
-        colorVariationsArr[1][0] +
-        "," +
-        colorVariationsArr[1][1] +
-        "," +
-        colorVariationsArr[1][2] +
-        ")",
-      "rgb(" +
-        colorVariationsArr[2][0] +
-        "," +
-        colorVariationsArr[2][1] +
-        "," +
-        colorVariationsArr[2][2] +
-        ")",
-      "rgb(" +
-        colorVariationsArr[3][0] +
-        "," +
-        colorVariationsArr[3][1] +
-        "," +
-        colorVariationsArr[3][2] +
-        ")",
+      colorVariationsArr[0][3],
+      colorVariationsArr[1][3],
+      colorVariationsArr[2][3],
+      colorVariationsArr[3][3],
     ]);
 
     //
@@ -163,9 +139,13 @@ const TactileButton = (props: TactileButtonProps) => {
             className="buttonLabel"
             x={dimensions.labelX}
             y={dimensions.labelY}
-            stroke={props.strokeColor}
             z-index="4"
+            font-family="monospace"
+            font-size={dimensions.fontSize}
+            font-weight="bold"
             text-anchor="middle"
+            stroke="none"
+            fill={props.strokeColor}
           >
             {props.label}
           </text>

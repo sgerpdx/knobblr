@@ -33,10 +33,13 @@ export const adjustColor = (rgbArr: number[], increment: number) => {
       adjustedArr.push(255);
     }
   });
+  adjustedArr.push(
+    "rgb(" + adjustedArr[0] + "," + adjustedArr[1] + "," + adjustedArr[2] + ")"
+  );
   return adjustedArr;
 };
 
-// Function currently unused -- generateShadingPalette (below) handles instead
+//// This function currently unused -- generateShadingPalette (below) handles instead
 // export const lightenColorInput = (color: string) => {
 //   // Lighten the input color to give it a 'faded' look for mode="rubber" in TactileButton:
 //   const rgbInputArr: any = color.match(/\d+/g);
@@ -58,9 +61,3 @@ export const generateShadingPalette = (rgbArr: number[]) => {
   }
   return colorArray; // This should be an array of arrays of all numbers
 };
-
-// module.exports = {
-//   convertHexToRGB,
-//   adjustColor,
-//   generateShadingPalette,
-// };
