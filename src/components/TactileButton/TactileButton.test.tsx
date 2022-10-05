@@ -1,5 +1,5 @@
 import React from "react";
-import { render, queryByAttribute } from "@testing-library/react";
+import { screen, render, queryByAttribute } from "@testing-library/react";
 
 import TactileButton from "./TactileButton";
 
@@ -32,10 +32,12 @@ describe("TactileButton", () => {
       />
     );
 
+    const buttonLabel = getById(dom.container, "label-text")?.innerHTML;
+    expect(buttonLabel).toBe("Good Morning");
+    //
     expect(getById(dom.container, "rect-lower"));
     expect(getById(dom.container, "rect-middle"));
     expect(getById(dom.container, "rect-upper"));
-    expect(getById(dom.container, "label-text"));
   });
 
   // Additional test needed: mock user color input to see that correct array of color shades is generated.
