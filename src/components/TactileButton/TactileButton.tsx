@@ -6,6 +6,7 @@ import {
   generateShadingPalette,
 } from "../../utils/tactileButtonUtils/colorCalculation";
 
+// Props for user inputs during component implementation:
 export interface TactileButtonProps {
   width: number;
   height?: number; //optional: defaults to [width/ * (3/4)]
@@ -18,8 +19,11 @@ export interface TactileButtonProps {
   sound?: boolean; //defaults to false; click sound for additional sensory feedback
 }
 
+// Component:
 const TactileButton = (props: TactileButtonProps) => {
   const [loading, setLoading] = useState(true);
+  // Generate a unique set of random ids for each instance of the component;
+  // This is necessary because otherwise, the linear gradients defined in the first (html-topmost) instance will be applied to all subsequent instances:
   const randomNum = Math.random() * 1;
   const uniqueIDs = [
     `gradient-lower-${randomNum}`,
@@ -42,6 +46,7 @@ const TactileButton = (props: TactileButtonProps) => {
     labelY: 24,
     fontSize: 16,
   });
+  // Lighter and/or darker variations on the input color for 3D shading effect:
   const [colors, setColors] = useState([
     "#0000E6",
     "#1A1AFF",
@@ -50,7 +55,7 @@ const TactileButton = (props: TactileButtonProps) => {
   ]);
 
   useEffect(() => {
-    // shape
+    // Shape
     const newDimensions = calculateButtonDimensions(props.width);
     setDimensions({
       width: newDimensions[0],
@@ -68,7 +73,8 @@ const TactileButton = (props: TactileButtonProps) => {
       fontSize: newDimensions[12],
     });
 
-    // color
+    // Color
+    //// TODO: This first conversion needs to be expanded to take in word-based colors, e.g. 'red'
     const rgbFill = convertHexToRGB(props.fillColor);
     const colorVariationsArr = generateShadingPalette(rgbFill[0]);
     setColors([
