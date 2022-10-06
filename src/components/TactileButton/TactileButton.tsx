@@ -15,7 +15,7 @@ export interface TactileButtonProps {
   mode?: string; //one of: *rubber, plastic
   label: string;
   lightingDirection?: number; //takes a number between 0 and 360 (degrees)
-  travel?: string; //optional: governs downward travel of button on click (def = ___)
+  travel?: string; //optional: governs downward travel of button on click; one of: *normal, low, high
   sound?: boolean; //defaults to false; click sound for additional sensory feedback
 }
 
