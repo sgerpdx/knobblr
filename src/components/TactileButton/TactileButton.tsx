@@ -92,10 +92,11 @@ const TactileButton = (props: TactileButtonProps) => {
   if (loading) return <span>loading...</span>;
 
   return (
-    <div>
+    <div title="tactile button">
       <svg
         role="button"
         aria-labelledby={uniqueIDs[4]}
+        focusable="false"
         width={dimensions.width}
         height={dimensions.containerHeight}
       >
@@ -162,6 +163,7 @@ const TactileButton = (props: TactileButtonProps) => {
             stroke="none"
             fill={props.strokeColor}
             id={uniqueIDs[4]}
+            role="label"
           >
             {props.label}
           </text>
