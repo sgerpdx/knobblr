@@ -6,6 +6,7 @@ import {
   generateShadingPalette,
 } from "../../utils/tactileButtonUtils/colorCalculation";
 
+// Props for user inputs during component implementation:
 export interface TactileButtonProps {
   width: number;
   height?: number; //optional: defaults to [width/ * (3/4)]
@@ -14,18 +15,22 @@ export interface TactileButtonProps {
   mode?: string; //one of: *rubber, plastic
   label: string;
   lightingDirection?: number; //takes a number between 0 and 360 (degrees)
-  travel?: string; //optional: governs downward travel of button on click (def = ___)
+  travel?: string; //optional: governs downward travel of button on click; one of: *normal, low, high
   sound?: boolean; //defaults to false; click sound for additional sensory feedback
 }
 
+// Component:
 const TactileButton = (props: TactileButtonProps) => {
   const [loading, setLoading] = useState(true);
-  const randomNum = Math.random() * 1;
+  // Generate a unique set of random ids for each instance of the component;
+  // This is necessary because otherwise, id-designated properties defined in the first (html-topmost) instance will be applied to all subsequent instances:
+  const randomNum = (Math.random() * 99).toFixed(3);
   const uniqueIDs = [
     `gradient-lower-${randomNum}`,
     `gradient-middle-${randomNum}`,
     `url(#gradient-lower-${randomNum})`,
     `url(#gradient-middle-${randomNum})`,
+    `label-text-${randomNum}`,
   ];
   const [dimensions, setDimensions] = useState({
     width: 80,
@@ -42,6 +47,7 @@ const TactileButton = (props: TactileButtonProps) => {
     labelY: 24,
     fontSize: 16,
   });
+  // Lighter and/or darker variations on the input color for 3D shading effect:
   const [colors, setColors] = useState([
     "#0000E6",
     "#1A1AFF",
@@ -50,7 +56,7 @@ const TactileButton = (props: TactileButtonProps) => {
   ]);
 
   useEffect(() => {
-    // shape
+    // Shape
     const newDimensions = calculateButtonDimensions(props.width);
     setDimensions({
       width: newDimensions[0],
@@ -68,7 +74,8 @@ const TactileButton = (props: TactileButtonProps) => {
       fontSize: newDimensions[12],
     });
 
-    // color
+    // Color
+    //// TODO: This first conversion needs to be expanded to take in word-based colors, e.g. 'red'
     const rgbFill = convertHexToRGB(props.fillColor);
     const colorVariationsArr = generateShadingPalette(rgbFill[0]);
     setColors([
@@ -85,8 +92,14 @@ const TactileButton = (props: TactileButtonProps) => {
   if (loading) return <span>loading...</span>;
 
   return (
-    <div>
-      <svg width={dimensions.width} height={dimensions.containerHeight}>
+    <div title="tactile button">
+      <svg
+        role="button"
+        aria-labelledby={uniqueIDs[4]}
+        focusable="false"
+        width={dimensions.width}
+        height={dimensions.containerHeight}
+      >
         <defs>
           <linearGradient id={uniqueIDs[0]}>
             <stop offset="5%" stopColor={colors[0]} />
@@ -149,7 +162,8 @@ const TactileButton = (props: TactileButtonProps) => {
             textAnchor="middle"
             stroke="none"
             fill={props.strokeColor}
-            id="label-text"
+            id={uniqueIDs[4]}
+            role="label"
           >
             {props.label}
           </text>
