@@ -57,9 +57,9 @@ Feature Task:
 
 Acceptance Tests:
 
-- Ensure that the code written for this library is compatible with the following browsers in web and/or mobile as applicable:
-  - Chrome, Firefox, Edge, Safari, Brave, Opera, Vivaldi
-  - Internet Explorer (if still applicable)
+- Ensure that the code written for this library is compatible with the following browsers in web and/or mobile form as applicable:
+  - _Chrome, Firefox, Edge, Safari, Brave, Opera, Vivaldi_
+  - _Internet Explorer_ (if still applicable)
   - Focus is on standard desktop computers, tablets and/or smartphone devices, i.e. not including specialized devices such as e-readers, etc.
 
 ---
