@@ -23,13 +23,14 @@ export interface TactileButtonProps {
 const TactileButton = (props: TactileButtonProps) => {
   const [loading, setLoading] = useState(true);
   // Generate a unique set of random ids for each instance of the component;
-  // This is necessary because otherwise, the linear gradients defined in the first (html-topmost) instance will be applied to all subsequent instances:
-  const randomNum = Math.random() * 1;
+  // This is necessary because otherwise, id-designated properties defined in the first (html-topmost) instance will be applied to all subsequent instances:
+  const randomNum = (Math.random() * 99).toFixed(3);
   const uniqueIDs = [
     `gradient-lower-${randomNum}`,
     `gradient-middle-${randomNum}`,
     `url(#gradient-lower-${randomNum})`,
     `url(#gradient-middle-${randomNum})`,
+    `label-text-${randomNum}`,
   ];
   const [dimensions, setDimensions] = useState({
     width: 80,
@@ -92,7 +93,12 @@ const TactileButton = (props: TactileButtonProps) => {
 
   return (
     <div>
-      <svg width={dimensions.width} height={dimensions.containerHeight}>
+      <svg
+        role="button"
+        aria-labelledby={uniqueIDs[4]}
+        width={dimensions.width}
+        height={dimensions.containerHeight}
+      >
         <defs>
           <linearGradient id={uniqueIDs[0]}>
             <stop offset="5%" stopColor={colors[0]} />
@@ -155,7 +161,7 @@ const TactileButton = (props: TactileButtonProps) => {
             textAnchor="middle"
             stroke="none"
             fill={props.strokeColor}
-            id="label-text"
+            id={uniqueIDs[4]}
           >
             {props.label}
           </text>
