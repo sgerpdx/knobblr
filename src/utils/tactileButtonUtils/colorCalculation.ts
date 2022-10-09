@@ -1,9 +1,11 @@
 // This file will house functions to process color inputs and generate shading palettes.
 
+import { htmlColors } from "../../data/htmlColors";
+
 //// TODO: This function needs to be expanded to also handle word-based color inputs, e.g. 'blue'
 //// ...its function will then be simply to take in a string and return an rgb color;
 //// ...also -- we want to ignore the 'a' in an rgba color without that breaking the function;
-export const convertHexToRGB = (hex: string) => {
+export const convertHexColor = (hex: string) => {
   // return RGB
   let hexArr = [];
   let rgbArr: any = [];
@@ -12,6 +14,64 @@ export const convertHexToRGB = (hex: string) => {
     rgbArr.push(parseInt(item, 16));
   });
   return [rgbArr, "rgb(" + rgbArr[0] + "," + rgbArr[1] + "," + rgbArr[2] + ")"];
+};
+
+export const splitHexToArray = (hex: string) => {
+  let hexArr = [];
+  hexArr.push(hex.slice(1, 3), hex.slice(3, 5), hex.slice(5, 7));
+  return hexArr;
+};
+
+export const findByColorId = (data: any, id: string) => {
+  const colorCode = data[id.toLowerCase()];
+  if (typeof colorCode != undefined) return colorCode;
+  console.log("Error: Color input value is incompatible.");
+  return false;
+};
+
+export const formatColor = (color: string) => {
+  const firstChar = color.charAt(0);
+  if (firstChar.toLowerCase() === "r") {
+    // pass through rgb string and also split out into array
+    const rgbArr: any = color.match(/\d+/g);
+    return [rgbArr, color];
+  } else if (firstChar === "#") {
+    // convert hex to rgb and return values array + string
+    convertHexColor(color);
+  } else {
+    //
+    const currentColor = findByColorId(htmlColors, color);
+    convertHexColor(currentColor);
+  }
+};
+
+export const convertToRGB = (color: string) => {
+  // return RGB from hex or rgba or html-name-color:
+  const firstChar = color.charAt(0);
+  if (firstChar === "#") {
+    let hexArr = [];
+    let rgbArr: any = [];
+    hexArr.push(color.slice(1, 3), color.slice(3, 5), color.slice(5, 7));
+    hexArr.forEach((item) => {
+      rgbArr.push(parseInt(item, 16));
+    });
+    return [
+      rgbArr,
+      "rgb(" + rgbArr[0] + "," + rgbArr[1] + "," + rgbArr[2] + ")",
+    ];
+  } else if (firstChar.toLowerCase() === "r") {
+    // pass through rgb string and also split out into array
+    const rgbArr: any = color.match(/\d+/g);
+    return [rgbArr, color];
+  } else {
+    // convert html-name-color into rgb
+  }
+  // add error handling for an input that doesn't compute.
+};
+
+export const satisfyLintingTemporarily = () => {
+  const colorDict: any = htmlColors;
+  console.log("Happy Now?", colorDict);
 };
 
 // const convertRGBToHex = (rgb: string) => {
