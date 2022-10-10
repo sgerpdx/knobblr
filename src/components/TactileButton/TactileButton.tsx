@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./TactileButton.css";
 import { calculateButtonDimensions } from "../../utils/tactileButtonUtils/shapeCalculation";
 import {
-  convertHexToRGB,
+  formatColor,
   generateShadingPalette,
 } from "../../utils/tactileButtonUtils/colorCalculation";
 
@@ -76,7 +76,7 @@ const TactileButton = (props: TactileButtonProps) => {
 
     // Color
     //// TODO: This first conversion needs to be expanded to take in word-based colors, e.g. 'red'
-    const rgbFill = convertHexToRGB(props.fillColor);
+    const rgbFill = formatColor(props.fillColor);
     const colorVariationsArr = generateShadingPalette(rgbFill[0]);
     setColors([
       colorVariationsArr[0][3],

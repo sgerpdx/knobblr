@@ -1,12 +1,11 @@
 // This file will house functions to process color inputs and generate shading palettes.
 
+// Dictionary object containing all name-defined html colors:
 import { htmlColors } from "../../data/htmlColors";
 
-//// TODO: This function needs to be expanded to also handle word-based color inputs, e.g. 'blue'
-//// ...its function will then be simply to take in a string and return an rgb color;
+// Take in hex string and return rbg values as array and string:
 //// ...also -- we want to ignore the 'a' in an rgba color without that breaking the function;
 export const convertHexColor = (hex: string) => {
-  // return RGB
   let hexArr = [];
   let rgbArr: any = [];
   hexArr.push(hex.slice(1, 3), hex.slice(3, 5), hex.slice(5, 7));
@@ -23,10 +22,13 @@ export const splitHexToArray = (hex: string) => {
 };
 
 export const findByColorId = (data: any, id: string) => {
-  const colorCode = data[id.toLowerCase()];
-  if (typeof colorCode != undefined) return colorCode;
-  console.log("Error: Color input value is incompatible.");
-  return false;
+  const colorKeys = Object.keys(data);
+  const colorValues = Object.values(data);
+  for (let i = 0; i < colorKeys.length; i++) {
+    if (colorKeys[i].toLowerCase() === id) return colorValues[i];
+  }
+  console.log("Error: Color name not found.");
+  return "No color match.";
 };
 
 export const formatColor = (color: string) => {
@@ -37,47 +39,17 @@ export const formatColor = (color: string) => {
     return [rgbArr, color];
   } else if (firstChar === "#") {
     // convert hex to rgb and return values array + string
-    convertHexColor(color);
+    const rgbData = convertHexColor(color);
+    return rgbData;
   } else {
-    //
-    const currentColor = findByColorId(htmlColors, color);
-    convertHexColor(currentColor);
+    // search dictionary of html colors to return hex string:
+    const currentColor: any = findByColorId(htmlColors, color);
+    // convert hex string to rgb array + string
+    //// TODO: Error-handling for color names that are N/A
+    const rgbData = convertHexColor(currentColor);
+    return rgbData;
   }
 };
-
-export const convertToRGB = (color: string) => {
-  // return RGB from hex or rgba or html-name-color:
-  const firstChar = color.charAt(0);
-  if (firstChar === "#") {
-    let hexArr = [];
-    let rgbArr: any = [];
-    hexArr.push(color.slice(1, 3), color.slice(3, 5), color.slice(5, 7));
-    hexArr.forEach((item) => {
-      rgbArr.push(parseInt(item, 16));
-    });
-    return [
-      rgbArr,
-      "rgb(" + rgbArr[0] + "," + rgbArr[1] + "," + rgbArr[2] + ")",
-    ];
-  } else if (firstChar.toLowerCase() === "r") {
-    // pass through rgb string and also split out into array
-    const rgbArr: any = color.match(/\d+/g);
-    return [rgbArr, color];
-  } else {
-    // convert html-name-color into rgb
-  }
-  // add error handling for an input that doesn't compute.
-};
-
-export const satisfyLintingTemporarily = () => {
-  const colorDict: any = htmlColors;
-  console.log("Happy Now?", colorDict);
-};
-
-// const convertRGBToHex = (rgb: string) => {
-//   // return hex
-//   // not currently needed -- we are accepting hex or rgb input but using rgb internally
-// };
 
 // This takes in an rgb array (e.g. ['143', '35', '255']) and % increment as a decimal (e.g. 0.15 for 15%) and increases r, g, and b each by that percent (***of 255***) up to 255 or down to 0:
 //// TODO: currently a negative increment is yielding negative output although it does not appear to be affecting the designed functionality by the eye test -- still this needs to be looked into;
@@ -103,15 +75,6 @@ export const adjustColor = (rgbArr: number[], increment: number) => {
   );
   return adjustedArr;
 };
-
-//// This function currently unused -- generateShadingPalette (below) handles instead -- this was for single-step lightening of a color by 15%
-//// Notable here is regex code to extract the number values from an rgb string (color.match(/\d+/g));
-// export const lightenColorInput = (color: string) => {
-//   // Lighten the input color to give it a 'faded' look for mode="rubber" in TactileButton:
-//   const rgbInputArr: any = color.match(/\d+/g);
-//   const rgbOutputArr = adjustColor(rgbInputArr, 0.15);
-//   return rgbOutputArr;
-// };
 
 // Takes in an rgb array (e.g. ['143', '35', '255']) and returns an array of arrays that are lighter and/or darker variations on the input based on the 'percentageArray' defined in the function:
 export const generateShadingPalette = (rgbArr: number[]) => {
