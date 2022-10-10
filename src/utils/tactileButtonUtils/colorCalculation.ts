@@ -8,11 +8,19 @@ import { htmlColors } from "../../data/htmlColors";
 export const convertHexColor = (hex: string) => {
   let hexArr = [];
   let rgbArr: any = [];
-  hexArr.push(hex.slice(1, 3), hex.slice(3, 5), hex.slice(5, 7));
-  hexArr.forEach((item) => {
-    rgbArr.push(parseInt(item, 16));
-  });
-  return [rgbArr, "rgb(" + rgbArr[0] + "," + rgbArr[1] + "," + rgbArr[2] + ")"];
+  // conditional for error handling -- catches N/A htmlColors
+  if (hex.charAt(0) !== "#") {
+    hexArr.push(hex.slice(1, 3), hex.slice(3, 5), hex.slice(5, 7));
+    hexArr.forEach((item) => {
+      rgbArr.push(parseInt(item, 16));
+    });
+    return [
+      rgbArr,
+      "rgb(" + rgbArr[0] + "," + rgbArr[1] + "," + rgbArr[2] + ")",
+    ];
+  } else {
+    return [[0, 0, 0], "No color match."];
+  }
 };
 
 export const splitHexToArray = (hex: string) => {
