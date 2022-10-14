@@ -22,7 +22,6 @@ export interface TactileButtonProps {
 
 // Component:
 const TactileButton = (props: TactileButtonProps) => {
-  //const [loading, setLoading] = useState(true);
   // Generate a unique set of random ids for each instance of the component;
   // This is necessary because otherwise, id-designated properties defined in the first (html-topmost) instance will be applied to all subsequent instances:
   const randomNum = (Math.random() * 99).toFixed(3);
@@ -33,21 +32,7 @@ const TactileButton = (props: TactileButtonProps) => {
     `url(#gradient-middle-${randomNum})`,
     `label-text-${randomNum}`,
   ];
-  // const [dimensions, setDimensions] = useState({
-  //   width: 80,
-  //   containerHeight: 60,
-  //   height: 30,
-  //   travel: 20,
-  //   topWidth: 76,
-  //   topHeight: 26,
-  //   borderRadiusTop: 4,
-  //   borderRadiusMiddle: 6,
-  //   xOffset: 2,
-  //   yOffset: 5,
-  //   labelX: 40,
-  //   labelY: 24,
-  //   fontSize: 16,
-  // });
+
   // Lighter and/or darker variations on the input color for 3D shading effect:
   const [colors, setColors] = useState([
     "#0000B4",
@@ -96,8 +81,6 @@ const TactileButton = (props: TactileButtonProps) => {
       colorVariationsArr[4][3],
     ]);
   }, [props.fillColor]);
-
-  //if (loading) return <span>loading...</span>;
 
   return (
     <div title="tactile button">

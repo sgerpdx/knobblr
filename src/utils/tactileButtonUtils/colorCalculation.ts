@@ -2,6 +2,7 @@
 
 // Dictionary object containing all name-defined html colors:
 import { htmlColors } from "../../data/htmlColors";
+// Interface object format for data pass-through:
 import { ShadeData } from "../../data/interfaces";
 
 //// NEW: The percentageArr for the adjustment will be defined by itself here, and then called in the other functions. This in part because we want to be able to edit it in one place.
@@ -30,6 +31,7 @@ export const adjustBaseColor = (rgbArr: string[]) => {
   return adjustedArr;
 };
 
+// Quickly formats an array of rgb values (["#", "#", "#"]) into a string:
 const rgbStringify = (rgbValues: string[]) => {
   return "rgb(" + rgbValues[0] + "," + rgbValues[1] + "," + rgbValues[2] + ")";
 };
@@ -45,23 +47,20 @@ export const convertHexColor = (hex: string) => {
   });
   const rgbArrAdjusted = adjustBaseColor(rgbArr);
   const rgbString = rgbStringify(rgbArrAdjusted);
-  // const convertedData: ShadeData = {
-  //   values: rgbArrAdjusted,
-  //   code: "rgb(" + rgbArr[0] + "," + rgbArr[1] + "," + rgbArr[2] + ")",
-  // };
-  // return convertedData;
   return {
     values: rgbArrAdjusted,
     code: rgbString,
   };
 };
 
+// Extracts values from hex color string:
 export const splitHexToArray = (hex: string) => {
   let hexArr = [];
   hexArr.push(hex.slice(1, 3), hex.slice(3, 5), hex.slice(5, 7));
   return hexArr;
 };
 
+// Searches dictionary of html colors to find hex code for matching name:
 export const findByColorId = (data: any, id: string) => {
   const colorKeys = Object.keys(data);
   const colorValues = Object.values(data);
@@ -90,48 +89,31 @@ export const formatColor = (color: string) => {
     const rgbData: ShadeData = convertHexColor(color);
     return rgbData;
   } else {
-    console.log("Couch:", color[0].toLowerCase());
     // search dictionary of html colors to return hex string:
     const currentHexColor: any = findByColorId(htmlColors, color);
     // convert hex string to rgb array + string
     //// TODO: Error-handling for color names that are N/A
     const rgbData: ShadeData = convertHexColor(currentHexColor);
-    console.log("RGBoutput:", rgbData.code);
     return rgbData;
   }
 };
 
-// This takes in an rgb array (e.g. ['143', '35', '255']) and % increment as a decimal (e.g. 0.15 for 15%) and increases r, g, and b each by that percent (***of 255***) up to 255 or down to 0:
+// This takes in an rgb array (e.g. ['143', '35', '255']) and %-increment as a decimal (e.g. 0.15 for 15%) and increases r, g, and b each by that percent of 255; incoming values of 255 or 0 have already been stepped back from those max/min limits with the adjustBaseColor function, so there is no need for conditional sorting here:
 //// TODO: currently a negative increment is yielding negative output although it does not appear to be affecting the designed functionality by the eye test -- still this needs to be looked into;
 export const adjustColor = (rgbArr: string[], increment: number) => {
-  const adjustedArr: any = []; // Lightened rgb values
+  const adjustedArr: any = []; // darkened or lightened rgb values
   const incrementAmount = 255 * increment;
-  //// **** it's rgbArr that is not getting into this function correctly ***
-  // We will lighten the color by increasing the value by 15% of 255 (38.25)
-  // However we do not want to exceed 255 because that is the max value
-  //// * this is the part that is broken -- the r/g/b values *
   rgbArr?.forEach((item) => {
-    const currentValue = Number(item);
-    const percentOf255 = currentValue / 255;
-    if (percentOf255 > increment && percentOf255 < 1 - increment) {
-      const adjustedValue = currentValue + incrementAmount;
-      adjustedArr.push(adjustedValue);
-    } else if (percentOf255 <= increment) {
-      adjustedArr.push("0");
-    } else {
-      adjustedArr.push("255");
-    }
+    const adjustedValue = Number(item) + incrementAmount;
+    adjustedArr.push(adjustedValue);
   });
-  adjustedArr.push(
-    "rgb(" + adjustedArr[0] + "," + adjustedArr[1] + "," + adjustedArr[2] + ")"
-  );
+  adjustedArr.push(rgbStringify(adjustedArr));
   return adjustedArr;
 };
 
 // Takes in an rgb array (e.g. ['143', '35', '255']) and returns an array of arrays that are lighter and/or darker variations on the input based on the 'percentageArray' defined in the function:
 export const generateShadingPalette = (rgbArr: string[]) => {
   // return an array of lighter and/or darker shades of input color to use in 3D shading effects
-  // const percentageArray = [-0.075, -0.05, 0.05, 0.125];
   let colorArray: any = [];
   for (let i = 0; i < percentageArray.length; i++) {
     //
@@ -140,6 +122,6 @@ export const generateShadingPalette = (rgbArr: string[]) => {
     //
     colorArray.push(colorSubArray);
   }
-  console.log("Waffle:", colorArray);
-  return colorArray; // This should be an array of arrays of all numbers
+  //// TODO: some of the values returned here are numbers, some are strings -- why?
+  return colorArray; // output format: ["#r", "#g", "#b", "rgb(#r,#g,#b)"]
 };
