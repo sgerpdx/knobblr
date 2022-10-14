@@ -4,7 +4,7 @@
     "cache": "cache/.npm",
     "registry": "https://npm.pkg.github.com/sgerpdx"
   },
-  "version": "1.0.10",
+  "version": "1.0.14",
   "description": "Analog-styled UI control component library.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
