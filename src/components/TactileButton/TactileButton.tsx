@@ -5,6 +5,7 @@ import {
   formatColor,
   generateShadingPalette,
 } from "../../utils/tactileButtonUtils/colorCalculation";
+import { ShadeData } from "../../data/interfaces";
 
 // Props for user inputs during component implementation:
 export interface TactileButtonProps {
@@ -21,7 +22,7 @@ export interface TactileButtonProps {
 
 // Component:
 const TactileButton = (props: TactileButtonProps) => {
-  const [loading, setLoading] = useState(true);
+  //const [loading, setLoading] = useState(true);
   // Generate a unique set of random ids for each instance of the component;
   // This is necessary because otherwise, id-designated properties defined in the first (html-topmost) instance will be applied to all subsequent instances:
   const randomNum = (Math.random() * 99).toFixed(3);
@@ -32,21 +33,21 @@ const TactileButton = (props: TactileButtonProps) => {
     `url(#gradient-middle-${randomNum})`,
     `label-text-${randomNum}`,
   ];
-  const [dimensions, setDimensions] = useState({
-    width: 80,
-    containerHeight: 60,
-    height: 30,
-    travel: 20,
-    topWidth: 76,
-    topHeight: 26,
-    borderRadiusTop: 4,
-    borderRadiusMiddle: 6,
-    xOffset: 2,
-    yOffset: 5,
-    labelX: 40,
-    labelY: 24,
-    fontSize: 16,
-  });
+  // const [dimensions, setDimensions] = useState({
+  //   width: 80,
+  //   containerHeight: 60,
+  //   height: 30,
+  //   travel: 20,
+  //   topWidth: 76,
+  //   topHeight: 26,
+  //   borderRadiusTop: 4,
+  //   borderRadiusMiddle: 6,
+  //   xOffset: 2,
+  //   yOffset: 5,
+  //   labelX: 40,
+  //   labelY: 24,
+  //   fontSize: 16,
+  // });
   // Lighter and/or darker variations on the input color for 3D shading effect:
   const [colors, setColors] = useState([
     "#0000E6",
@@ -55,41 +56,46 @@ const TactileButton = (props: TactileButtonProps) => {
     "#4D4DFF",
   ]);
 
-  useEffect(() => {
-    // Shape
-    const newDimensions = calculateButtonDimensions(props.width);
-    setDimensions({
-      width: newDimensions[0],
-      containerHeight: newDimensions[1],
-      height: newDimensions[2],
-      travel: newDimensions[3],
-      topWidth: newDimensions[4],
-      topHeight: newDimensions[5],
-      borderRadiusTop: newDimensions[6],
-      borderRadiusMiddle: newDimensions[7],
-      xOffset: newDimensions[8],
-      yOffset: newDimensions[9],
-      labelX: newDimensions[10],
-      labelY: newDimensions[11],
-      fontSize: newDimensions[12],
-    });
+  // Function to return an array of lighter/darker shades for button:
+  const handlePaletteGeneration = (rgbValues: string[]) => {
+    const newPalette = generateShadingPalette(rgbValues);
+    return newPalette;
+  };
 
-    // Color
-    //// TODO: This first conversion needs to be expanded to take in word-based colors, e.g. 'red'
-    const rgbFill = formatColor(props.fillColor);
-    const colorVariationsArr = generateShadingPalette(rgbFill[0]);
+  // Shape
+  // --> calculate button dimensions based on width prop:
+  const newDimensions = calculateButtonDimensions(props.width);
+  const dimensions = {
+    width: newDimensions[0],
+    containerHeight: newDimensions[1],
+    height: newDimensions[2],
+    travel: newDimensions[3],
+    topWidth: newDimensions[4],
+    topHeight: newDimensions[5],
+    borderRadiusTop: newDimensions[6],
+    borderRadiusMiddle: newDimensions[7],
+    xOffset: newDimensions[8],
+    yOffset: newDimensions[9],
+    labelX: newDimensions[10],
+    labelY: newDimensions[11],
+    fontSize: newDimensions[12],
+  };
+
+  // Color
+  // --> calculate all colors for 3D effect based on fillColor prop:
+  const rgbFill: ShadeData = formatColor(props.fillColor);
+  const colorVariationsArr = generateShadingPalette(rgbFill.values);
+
+  useEffect(() => {
     setColors([
       colorVariationsArr[0][3],
       colorVariationsArr[1][3],
       colorVariationsArr[2][3],
       colorVariationsArr[3][3],
     ]);
+  }, [props.fillColor]);
 
-    //
-    setLoading(false);
-  }, []);
-
-  if (loading) return <span>loading...</span>;
+  //if (loading) return <span>loading...</span>;
 
   return (
     <div title="tactile button">
@@ -103,17 +109,17 @@ const TactileButton = (props: TactileButtonProps) => {
         <defs>
           <linearGradient id={uniqueIDs[0]}>
             <stop offset="5%" stopColor={colors[0]} />
-            <stop offset="7%" stopColor={props.fillColor} />
-            <stop offset="10%" stopColor={colors[1]} />
-            <stop offset="90%" stopColor={colors[1]} />
-            <stop offset="93%" stopColor={props.fillColor} />
+            <stop offset="7%" stopColor={colors[1]} />
+            <stop offset="10%" stopColor={props.fillColor} />
+            <stop offset="90%" stopColor={props.fillColor} />
+            <stop offset="93%" stopColor={colors[1]} />
             <stop offset="96%" stopColor={colors[0]} />
           </linearGradient>
           <linearGradient id={uniqueIDs[1]}>
-            <stop offset="5%" stopColor={colors[1]} />
+            <stop offset="5%" stopColor={props.fillColor} />
             <stop offset="10%" stopColor={colors[2]} />
             <stop offset="90%" stopColor={colors[2]} />
-            <stop offset="95%" stopColor={colors[1]} />
+            <stop offset="95%" stopColor={props.fillColor} />
           </linearGradient>
         </defs>
 
