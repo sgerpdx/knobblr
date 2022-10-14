@@ -50,8 +50,9 @@ const TactileButton = (props: TactileButtonProps) => {
   // });
   // Lighter and/or darker variations on the input color for 3D shading effect:
   const [colors, setColors] = useState([
-    "#0000E6",
-    "#1A1AFF",
+    "#0000B4",
+    "#0000CD",
+    "#1A1AE7",
     "#3333FF",
     "#4D4DFF",
   ]);
@@ -92,6 +93,7 @@ const TactileButton = (props: TactileButtonProps) => {
       colorVariationsArr[1][3],
       colorVariationsArr[2][3],
       colorVariationsArr[3][3],
+      colorVariationsArr[4][3],
     ]);
   }, [props.fillColor]);
 
@@ -110,16 +112,16 @@ const TactileButton = (props: TactileButtonProps) => {
           <linearGradient id={uniqueIDs[0]}>
             <stop offset="5%" stopColor={colors[0]} />
             <stop offset="7%" stopColor={colors[1]} />
-            <stop offset="10%" stopColor={props.fillColor} />
-            <stop offset="90%" stopColor={props.fillColor} />
+            <stop offset="10%" stopColor={colors[2]} />
+            <stop offset="90%" stopColor={colors[2]} />
             <stop offset="93%" stopColor={colors[1]} />
             <stop offset="96%" stopColor={colors[0]} />
           </linearGradient>
           <linearGradient id={uniqueIDs[1]}>
-            <stop offset="5%" stopColor={props.fillColor} />
-            <stop offset="10%" stopColor={colors[2]} />
-            <stop offset="90%" stopColor={colors[2]} />
-            <stop offset="95%" stopColor={props.fillColor} />
+            <stop offset="5%" stopColor={colors[2]} />
+            <stop offset="10%" stopColor={colors[3]} />
+            <stop offset="90%" stopColor={colors[3]} />
+            <stop offset="95%" stopColor={colors[2]} />
           </linearGradient>
         </defs>
 
@@ -152,7 +154,7 @@ const TactileButton = (props: TactileButtonProps) => {
             width={dimensions.topWidth}
             height={dimensions.topHeight}
             z-index="3"
-            fill={colors[3]}
+            fill={colors[4]}
             rx={dimensions.borderRadiusTop}
             className="buttonUpper"
             id="rect-upper"
