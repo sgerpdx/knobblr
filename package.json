@@ -4,7 +4,7 @@
     "cache": "cache/.npm",
     "registry": "https://npm.pkg.github.com/sgerpdx"
   },
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Analog-styled UI control component library.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -26,6 +26,7 @@
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-node-resolve": "^14.1.0",
     "@rollup/plugin-typescript": "^8.5.0",
+    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.0.3",
     "@types/react": "^18.0.21",

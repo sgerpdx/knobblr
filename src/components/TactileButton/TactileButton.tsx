@@ -22,8 +22,8 @@ export interface TactileButtonProps {
 
 // Component:
 const TactileButton = (props: TactileButtonProps) => {
-  // Generate a unique set of random ids for each instance of the component;
-  // This is necessary because otherwise, id-designated properties defined in the first (html-topmost) instance will be applied to all subsequent instances:
+  // Generate a unique set of random IDs for each instance of the component;
+  // This is necessary because otherwise, ID-designated properties defined in the first (html-topmost) instance will be applied to all subsequent instances:
   const randomNum = (Math.random() * 99).toFixed(3);
   const uniqueIDs = [
     `gradient-lower-${randomNum}`,
@@ -32,8 +32,8 @@ const TactileButton = (props: TactileButtonProps) => {
     `url(#gradient-middle-${randomNum})`,
     `label-text-${randomNum}`,
   ];
-  
-  // Lighter and/or darker variations on the input color for 3D shading effect:
+
+  // Lighter and/or darker variations on the input color for 3D shading effect (default values based on html 'mediumblue'):
   const [colors, setColors] = useState([
     "#0000B4",
     "#0000CD",
@@ -93,16 +93,16 @@ const TactileButton = (props: TactileButtonProps) => {
       >
         <defs>
           <linearGradient id={uniqueIDs[0]}>
-            <stop offset="5%" stopColor={colors[0]} />
-            <stop offset="7%" stopColor={colors[1]} />
-            <stop offset="10%" stopColor={colors[2]} />
+            <stop id="lower-lateral" offset="5%" stopColor={colors[0]} />
+            <stop id="lower-intermediate" offset="7%" stopColor={colors[1]} />
+            <stop id="lower-medial" offset="10%" stopColor={colors[2]} />
             <stop offset="90%" stopColor={colors[2]} />
             <stop offset="93%" stopColor={colors[1]} />
             <stop offset="96%" stopColor={colors[0]} />
           </linearGradient>
           <linearGradient id={uniqueIDs[1]}>
-            <stop offset="5%" stopColor={colors[2]} />
-            <stop offset="10%" stopColor={colors[3]} />
+            <stop id="mid-lateral" offset="5%" stopColor={colors[2]} />
+            <stop id="mid-medial" offset="10%" stopColor={colors[3]} />
             <stop offset="90%" stopColor={colors[3]} />
             <stop offset="95%" stopColor={colors[2]} />
           </linearGradient>
