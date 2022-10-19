@@ -6,17 +6,18 @@ import { htmlColors } from "../../data/htmlColors";
 import { ShadeData } from "../../data/interfaces";
 
 //// NEW: The percentageArr for the adjustment will be defined by itself here, and then called in the other functions. This in part because we want to be able to edit it in one place.
-//// Part of this is an outgrowth of the need to address the unsatisfactory adjustment/palette results from uniform logic being applied to super saturated/desaturated colors, e.g. html 'red' with its 255/0/0 rgb defaults;
-//// What we want to do is take any incoming 255 and reduce it by the highest percentage value, e.g. if said value is 0.125 then we reduce 255 by that much, so that it can be increased noticeably to its max lightness (the top of the button);
+//// Part of this is an outgrowth of the need to address the unsatisfactory adjustment/palette results from uniform logic being applied to super saturated/desaturated colors, e.g. html 'red' with its 255/0/0 rgb values;
+//// What we want to do is take any incoming 255 and reduce it by the highest percentage value, e.g. if said value is 0.125 then we reduce 255 by that much (12.5%), so that it can be increased noticeably to its max lightness (the top of the button);
 //// Likewise any incoming 0 will be increased so that the lowest percentage can be taken out with an appreciable reduction;
-//// All of this means that the output array (from generateShadingPalette) will need an additional value -- the 'adjusted base value' from which the lighter/darker shades are calculated. This additional value will replace {props.fillColor} in the svg code.
-const percentageArray = [-0.075, 0, 0.05, 0.1, 0.125];
+const percentageArray = [-0.075, 0, 0.05, 0.1, 0.125]; // the percentages by which the color is stepped up or down
 
 // This function edits the base/input color to give it room to lighten/darken by stepping down any 255 rgb values and stepping up any 0 rgb values:
 export const adjustBaseColor = (rgbArr: string[]) => {
   let adjustedArr: any = [];
-  rgbArr?.forEach((item) => {
-    let currentValue = Number(item);
+  let i = 0;
+  // limiting output array to length 3 allows us to ignore the opacity(a) value in rgba inputs:
+  while (i < 3) {
+    let currentValue = Number(rgbArr[i]);
     if (currentValue === 255) {
       const highestIncrement = percentageArray[percentageArray.length - 1];
       // reduce value so that it has room to increase
@@ -27,7 +28,8 @@ export const adjustBaseColor = (rgbArr: string[]) => {
       currentValue = 0 - 255 * lowestIncrement;
     }
     adjustedArr.push(currentValue);
-  });
+    i++;
+  }
   return adjustedArr;
 };
 
@@ -61,6 +63,7 @@ export const splitHexToArray = (hex: string) => {
 };
 
 // Searches dictionary of html colors to find hex code for matching name:
+//// TODO: Error-handling needs to be addressed here...
 export const findByColorId = (data: any, id: string) => {
   const colorKeys = Object.keys(data);
   const colorValues = Object.values(data);

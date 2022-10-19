@@ -33,7 +33,7 @@ const TactileButton = (props: TactileButtonProps) => {
     `label-text-${randomNum}`,
   ];
 
-  // Lighter and/or darker variations on the input color for 3D shading effect:
+  // Lighter and/or darker variations on the input color for 3D shading effect (default values based on html 'mediumblue'):
   const [colors, setColors] = useState([
     "#0000B4",
     "#0000CD",

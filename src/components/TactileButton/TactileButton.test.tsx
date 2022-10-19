@@ -3,7 +3,7 @@ import { screen, render, queryByAttribute } from "@testing-library/react";
 
 import TactileButton from "./TactileButton";
 
-// DOM location strategy per: https://stackoverflow.com/questions/53003594/find-element-by-id-in-react-testing-library
+// DOM locator for svg elements:
 const getById = queryByAttribute.bind(null, "id");
 
 describe("TactileButton", () => {
@@ -17,7 +17,6 @@ describe("TactileButton", () => {
         mode="rubber"
       />
     );
-    // The following can be used to see the properties of the elements (useful if they are imported from external libraries and unseen in the native component code here):
     // screen.debug();
   });
 
@@ -33,15 +32,36 @@ describe("TactileButton", () => {
     );
     //screen.debug();
 
-    // Each svg <rectangle> element:
-    expect(getById(dom.container, "rect-lower"));
-    expect(getById(dom.container, "rect-middle"));
-    expect(getById(dom.container, "rect-upper"));
+    // Each svg <rectangle> element's dimensions and container coordinates:
+    // Top rectangle:
+    const buttonUpper = getById(dom.container, "rect-upper");
+    expect(buttonUpper?.getAttribute("width")).toBe("96");
+    expect(buttonUpper?.getAttribute("height")).toBe("21");
+    expect(buttonUpper?.getAttribute("z-index")).toBe("3");
+    expect(buttonUpper?.getAttribute("x")).toBe("2");
+    expect(buttonUpper?.getAttribute("y")).toBe("6");
+    expect(buttonUpper?.getAttribute("rx")).toBe("5");
+
+    // Middle rectangle:
+    const buttonMiddle = getById(dom.container, "rect-middle");
+    expect(buttonMiddle?.getAttribute("width")).toBe("100");
+    expect(buttonMiddle?.getAttribute("height")).toBe("25");
+    expect(buttonMiddle?.getAttribute("z-index")).toBe("2");
+    expect(buttonMiddle?.getAttribute("x")).toBe("0");
+    expect(buttonMiddle?.getAttribute("y")).toBe("6");
+    expect(buttonMiddle?.getAttribute("rx")).toBe("8");
+
+    // Bottom rectangle:
+    const buttonLower = getById(dom.container, "rect-lower");
+    expect(buttonLower?.getAttribute("width")).toBe("100");
+    expect(buttonLower?.getAttribute("height")).toBe("25");
+    expect(buttonLower?.getAttribute("z-index")).toBe("1");
+    expect(buttonLower?.getAttribute("x")).toBe("0");
+    expect(buttonLower?.getAttribute("y")).toBe("25");
 
     // The svg <text> element housing the label;
-    // Initially this test failed because the component assigns IDs based on a random number each time it renders, in order to allow for multiple instances of the TactileButton with separate color, shape and label properties; because of this, 'id' cannot be used in the same way that it is used for the rectangles above, as those are each a known static value;
-    // The best fix here may be to run a mock of the component, as there does not appear to be a clear-candidate aria-role to use;
-    //// ***For the moment we are using role="label" in the svg <text> element, something which may not be correct but which allows this test to work without a mock:
+    //// Initially this test failed because the component assigns IDs based on a random number each time it renders, in order to allow for multiple instances of the TactileButton with separate color, shape and label properties; because of this, 'id' cannot be used in the same way that it is used for the rectangles above, as those are each a known static value;
+    //// We are using role="label" in the svg <text> element, something which may not be correct but which allows this test to work without a mock (which may not be feasible given the random nature of the ID here):
     const buttonLabel = screen.getByRole("label").innerHTML;
     expect(buttonLabel).toBe("Good Morning");
 
