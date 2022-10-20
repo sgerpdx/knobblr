@@ -1,5 +1,5 @@
 .tactileButton {
-  border-radius: 4px;
+  cursor: pointer;
 }
 
 #top:hover {
@@ -12,6 +12,5 @@
 }
 
 .buttonLabel {
-  cursor: pointer;
   pointer-events: none;
 }
