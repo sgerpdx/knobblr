@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { screen, render, queryByAttribute } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import TactileButton from "./TactileButton";
 
 // DOM locator for svg elements:
 const getById = queryByAttribute.bind(null, "id");
+// Dummy prop to pass into onClick:
+//// TODO: Find a way to test onClick via an updated value possibly in a special test-only 'implementation component'.
+const handleTestClick = () => {
+  console.log("Click handler working.");
+};
 
 describe("TactileButton", () => {
   test("renders the TactileButton component", () => {
+    // Render the component:
     render(
       <TactileButton
+        onClick={handleTestClick}
         label="Hello world!"
         width={100}
         fillColor="blue"
@@ -17,12 +25,16 @@ describe("TactileButton", () => {
         mode="rubber"
       />
     );
-    // screen.debug();
+    //screen.debug();
+
+    // Fire user event to test click:
+    userEvent.click(screen.getByRole("button"));
   });
 
   test("renders SVG elements in TactileButton component", () => {
     const dom = render(
       <TactileButton
+        onClick={handleTestClick}
         label="Good Morning"
         width={100}
         fillColor="orange"
@@ -71,6 +83,7 @@ describe("TactileButton", () => {
   test("renders correct fill and stroke colors based on user-defined prop values", () => {
     const dom = render(
       <TactileButton
+        onClick={handleTestClick}
         label="Good Morning"
         width={120}
         fillColor="mediumblue"
