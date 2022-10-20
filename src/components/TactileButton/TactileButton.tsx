@@ -9,6 +9,7 @@ import { ShadeData } from "../../data/interfaces";
 
 // Props for user inputs during component implementation:
 export interface TactileButtonProps {
+  onClick: React.MouseEventHandler<SVGSVGElement>;
   width: number;
   height?: number; //optional: defaults to [width/ * (3/4)]
   fillColor: string;
@@ -90,6 +91,8 @@ const TactileButton = (props: TactileButtonProps) => {
         focusable="false"
         width={dimensions.width}
         height={dimensions.containerHeight}
+        onClick={props.onClick}
+        className="tactileButton"
       >
         <defs>
           <linearGradient id={uniqueIDs[0]}>
