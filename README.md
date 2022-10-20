@@ -20,11 +20,15 @@ npm install @sgerpdx/knobblr
     import React from "react";  
     import {TactileButton} from '@sgerpdx/knobblr';  
 
-    function App() {  
+    function App() { 
+    
+      const handleFormLaunch = () => {
+        // code to open login form or modal
+      };
 
       return (  
         <>  
-          <TactileButton width="100" fillColor="#0000CD" strokeColor="white" label="menu" />  
+          <TactileButton onClick={handleFormLaunch} width="100" fillColor="#0000CD" strokeColor="white" label="Login" />  
         </>  
       );  
     }    
