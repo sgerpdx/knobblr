@@ -4,9 +4,11 @@ A React UI component library with a focus on selectors -- knobs, switches, butto
 
 ![version status shield](https://img.shields.io/badge/dynamic/json?color=%230000CD&label=version&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fsgerpdx%2Fknobblr%2Fmain%2Fpackage.json)  
 
+🧱 currently in dev mode 🧱
+
 ---  
 
-#### Installation  
+### Installation  
 
 `
 npm install @sgerpdx/knobblr
@@ -14,9 +16,9 @@ npm install @sgerpdx/knobblr
 
 ---  
 
-#### Example Usage  
+### Example Usage  
 
-  
+```jsx
     import React from "react";  
     import {TactileButton} from '@sgerpdx/knobblr';  
 
@@ -32,11 +34,11 @@ npm install @sgerpdx/knobblr
         </>  
       );  
     }    
- 
+```
 
 ---  
 
-#### Demo   
+### Demo   
 
 - TactileButton demo on [Glitch](https://glitch.com/edit/#!/buttery-truth-papyrus?path=src%2Fcomponents%2FButtonDemo.tsx%3A1%3A0)  
 
