@@ -122,7 +122,7 @@ describe("TactileButton", () => {
       "rgb(44.625,44.625,230.5)"
     );
 
-    // Test the fill attribute of the button top svg rectangle:
+    // Test the fill attribute of the button-top svg <rectangle>:
     const buttonUpper = getById(dom.container, "rect-upper");
     expect(buttonUpper?.getAttribute("fill")).toBe("rgb(51,51,236.875)");
 

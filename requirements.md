@@ -1,6 +1,6 @@
 # Knobblr
 
-A React.js UI control component library with analog-inspired styling.
+A React UI control component library with analog-inspired styling.
 
 ## User Stories
 
@@ -46,8 +46,8 @@ Feature Task:
 Acceptance Tests:
 
 - Ensure that components work with standard JavaScript events such as:
-  - Core MVP functionality: _onClick, onChange, onSubmit_
-  - Possibly applicable: _onmousedown, onselect, (event.)target_
+  - Core MVP functionality: onClick, onChange, onSubmit
+  - Possibly applicable: onmousedown, onselect, (event.)target
 
 5. Want: As an end-user I want to be able to use applications that incorporate this component library in any web or mobile browser.
 
@@ -58,15 +58,19 @@ Feature Task:
 Acceptance Tests:
 
 - Ensure that the code written for this library is compatible with the following browsers in web and/or mobile form as applicable:
-  - _Chrome, Firefox, Edge, Safari, Brave, Opera, Vivaldi_
-  - _Internet Explorer_ (if still applicable)
+  - Chrome, Firefox, Edge, Safari, Brave, Opera, Vivaldi
+  - Internet Explorer (if still applicable)
   - Focus is on standard desktop computers, tablets and/or smartphone devices, i.e. not including specialized devices such as e-readers, etc.
 
 ---
 
-### Data-Flow:
+### Illustrations
 
-### UI Wireframe:
+#### TactileButton Component:
+
+![button dimensions description](https://eebimurzhljxfivqzvuz.supabase.co/storage/v1/object/sign/knobblr-assets/button-tactile_dimensions.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJrbm9iYmxyLWFzc2V0cy9idXR0b24tdGFjdGlsZV9kaW1lbnNpb25zLnBuZyIsImlhdCI6MTY2NjM5NDQwMywiZXhwIjoxOTgxNzU0NDAzfQ.qSfxY210c-tl2JBpoBmFJbHSUzdqhOmmjGDPSagwkYo)
+
+![shading palette description](https://eebimurzhljxfivqzvuz.supabase.co/storage/v1/object/sign/knobblr-assets/button-tactile_shading.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJrbm9iYmxyLWFzc2V0cy9idXR0b24tdGFjdGlsZV9zaGFkaW5nLnBuZyIsImlhdCI6MTY2NjM5NDQwNiwiZXhwIjoxOTgxNzU0NDA2fQ.-_gq3kRv-gIW4bA3bkJyO42_w9GFrroMHK2pcmFxS1A)
 
 ---
 
@@ -86,18 +90,23 @@ It is my belief that a sense of physical interaction is a healthy thing, and how
 
 ## Scope
 
-`> IN:`  
-`< OUT:`
+- **IN:** User-developers can specify the values of the component's props, including colors in rgb, rgba, hex or html color-name formats, and external event-handling functionality as applicable. Said prop values may be modifiable via state-management. End-users can use the component via mouse or touch, as part of an accessible UI in standard desktop and mobile browsers.
+- **OUT:** Users cannot change the component's props or the internal logic which governs the appearance and set-functionality of the component. Colors in formats other than those listed above (e.g. hsl) are not applicable.
 
 ### MVP:
 
 This library is easily installable via NPM and includes the following two base components in reliable, test-driven, accessibility-conscious form:
 
-- **TactileButton**: Modeled on a conventional silicon-rubber remote control button.
-- **RotaryKnob**: Modeled on a potentiometer-based turnable knob that allows selection among/along a range of incremental settings for a give parameter.
+**TactileButton**: Modeled on a conventional silicon-rubber remote control button.  
+**RotaryKnob**: Modeled on a potentiometer-based turnable knob that allows selection among/along a range of incremental settings for a give parameter.
 
 ### Stretch Goals:
 
-## Non-Functional Reqs (req/plan to meet):
+- The TactileButton component has a number of optional props that have not been implemented as far as functionality: (custom) height, plastic mode (minimalist alternative to the default rubber mode), custom button travel when active, etc.
+- Additional on-theme components: toggle and slider switches, etc.
 
-## Data Flow:
+## Non-Functional Requirements:
+
+Accessibility -- Components will be compatible with screen readers and the documentation will include resources to help users choose visually-accessible color combinations.
+
+Simplicity of Usage -- Components install and import easily, do not introduce excessive complications into the code into which they are deployed, and can be modified within prescribed scope with minimal editing load.
