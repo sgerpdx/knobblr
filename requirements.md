@@ -86,16 +86,23 @@ It is my belief that a sense of physical interaction is a healthy thing, and how
 
 ## Scope
 
-`> IN:`  
-`< OUT:`
+- **IN:** User-developers can specify the values of the component's props, including colors in rgb, rgba, hex or html color-name formats, and external event-handling functionality as applicable. Said prop values may be modifiable via state-management. End-users can use the component via mouse or touch, as part of an accessible UI in standard desktop and mobile browsers.
+- **OUT:** Users cannot change the component's props or the internal logic which governs the appearance and set-functionality of the component. Colors in formats other than those listed above (e.g. hsl) are not applicable.
 
 ### MVP:
 
 This library is easily installable via NPM and includes the following two base components in reliable, test-driven, accessibility-conscious form:
 
-- **TactileButton**: Modeled on a conventional silicon-rubber remote control button.
-- **RotaryKnob**: Modeled on a potentiometer-based turnable knob that allows selection among/along a range of incremental settings for a give parameter.
+**TactileButton**: Modeled on a conventional silicon-rubber remote control button.  
+**RotaryKnob**: Modeled on a potentiometer-based turnable knob that allows selection among/along a range of incremental settings for a give parameter.
 
 ### Stretch Goals:
 
-## Non-Functional Reqs (req/plan to meet):
+- The TactileButton component has a number of optional props that have not been implemented as far as functionality: (custom) height, plastic mode (minimalist alternative to the default rubber mode), custom button travel when active, etc.
+- Additional on-theme components: toggle and slider switches, etc.
+
+## Non-Functional Requirements:
+
+Accessibility -- Components will be compatible with screen readers and the documentation will include resources to help users choose visually-accessible color combinations.
+
+Simplicity of Usage -- Components install and import easily, do not introduce excessive complications into the code into which they are deployed, and can be modified within prescribed scope with minimal editing load.
