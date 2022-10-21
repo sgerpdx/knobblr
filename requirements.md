@@ -64,9 +64,13 @@ Acceptance Tests:
 
 ---
 
-### Data-Flow:
+### Illustrations
 
-### UI Wireframe:
+#### TactileButton Component:
+
+![button dimensions description](https://eebimurzhljxfivqzvuz.supabase.co/storage/v1/object/sign/knobblr-assets/button-tactile_dimensions.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJrbm9iYmxyLWFzc2V0cy9idXR0b24tdGFjdGlsZV9kaW1lbnNpb25zLnBuZyIsImlhdCI6MTY2NjM5NDQwMywiZXhwIjoxOTgxNzU0NDAzfQ.qSfxY210c-tl2JBpoBmFJbHSUzdqhOmmjGDPSagwkYo)
+
+![shading palette description](https://eebimurzhljxfivqzvuz.supabase.co/storage/v1/object/sign/knobblr-assets/button-tactile_shading.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJrbm9iYmxyLWFzc2V0cy9idXR0b24tdGFjdGlsZV9zaGFkaW5nLnBuZyIsImlhdCI6MTY2NjM5NDQwNiwiZXhwIjoxOTgxNzU0NDA2fQ.-_gq3kRv-gIW4bA3bkJyO42_w9GFrroMHK2pcmFxS1A)
 
 ---
 
