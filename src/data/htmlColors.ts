@@ -148,7 +148,3 @@ export const htmlColors = {
   Yellow: "#FFFF00",
   YellowGreen: "#9ACD32",
 };
-
-// module.exports = {
-//   htmlColors,
-// };

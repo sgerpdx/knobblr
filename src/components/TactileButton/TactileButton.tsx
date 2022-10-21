@@ -9,16 +9,16 @@ import { ShadeData } from "../../data/interfaces";
 
 // Props for user inputs during component implementation:
 export interface TactileButtonProps {
-  onClick: React.MouseEventHandler<SVGSVGElement>;
+  onClick?: React.MouseEventHandler<SVGSVGElement>;
   width: number;
-  height?: number; //optional: defaults to [width/ * (3/4)]
+  height?: number; //optional: defaults to [width/ * (3/4)] -->CUSTOM HEIGHT NOT YET IMPLEMENTED
   fillColor: string;
   strokeColor: string;
-  mode?: string; //one of: *rubber, plastic
+  mode?: string; //one of: *rubber, plastic -->PLASTIC NOT YET IMPLEMENTED
   label: string;
-  lightingDirection?: number; //takes a number between 0 and 360 (degrees)
-  travel?: string; //optional: governs downward travel of button on click; one of: *normal, low, high
-  sound?: boolean; //defaults to false; click sound for additional sensory feedback
+  lightingDirection?: number; //takes a number between 0 and 360 (degrees) -->NOT YET IMPLEMENTED
+  travel?: string; //governs downward travel of button onClick; one of: *normal, low, high -->NOT YET IMPLEMENTED
+  sound?: boolean; //defaults to false; 'click' sound for additional sensory feedback -->NOT YET IMPLEMENTED
 }
 
 // Component:

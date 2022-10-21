@@ -1,6 +1,6 @@
 # Knobblr
 
-A React.js UI control component library with analog-inspired styling.
+A React UI control component library with analog-inspired styling.
 
 ## User Stories
 
@@ -46,8 +46,8 @@ Feature Task:
 Acceptance Tests:
 
 - Ensure that components work with standard JavaScript events such as:
-  - Core MVP functionality: _onClick, onChange, onSubmit_
-  - Possibly applicable: _onmousedown, onselect, (event.)target_
+  - Core MVP functionality: onClick, onChange, onSubmit
+  - Possibly applicable: onmousedown, onselect, (event.)target
 
 5. Want: As an end-user I want to be able to use applications that incorporate this component library in any web or mobile browser.
 
@@ -58,8 +58,8 @@ Feature Task:
 Acceptance Tests:
 
 - Ensure that the code written for this library is compatible with the following browsers in web and/or mobile form as applicable:
-  - _Chrome, Firefox, Edge, Safari, Brave, Opera, Vivaldi_
-  - _Internet Explorer_ (if still applicable)
+  - Chrome, Firefox, Edge, Safari, Brave, Opera, Vivaldi
+  - Internet Explorer (if still applicable)
   - Focus is on standard desktop computers, tablets and/or smartphone devices, i.e. not including specialized devices such as e-readers, etc.
 
 ---
@@ -99,5 +99,3 @@ This library is easily installable via NPM and includes the following two base c
 ### Stretch Goals:
 
 ## Non-Functional Reqs (req/plan to meet):
-
-## Data Flow:

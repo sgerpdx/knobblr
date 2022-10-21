@@ -1,4 +1,4 @@
-// This file will house functions to process color inputs and generate shading palettes.
+// This file houses functions to process color inputs and generate shading palettes.
 
 // Dictionary object containing all name-defined html colors:
 import { htmlColors } from "../../data/htmlColors";
@@ -15,7 +15,7 @@ const percentageArray = [-0.075, 0, 0.05, 0.1, 0.125]; // the percentages by whi
 export const adjustBaseColor = (rgbArr: string[]) => {
   let adjustedArr: any = [];
   let i = 0;
-  // limiting output array to length 3 allows us to ignore the opacity(a) value in rgba inputs:
+  // limiting output array to length 3 allows us to ignore the opacity('a') value in rgba inputs:
   while (i < 3) {
     let currentValue = Number(rgbArr[i]);
     if (currentValue === 255) {
@@ -102,7 +102,7 @@ export const formatColor = (color: string) => {
 };
 
 // This takes in an rgb array (e.g. ['143', '35', '255']) and %-increment as a decimal (e.g. 0.15 for 15%) and increases r, g, and b each by that percent of 255; incoming values of 255 or 0 have already been stepped back from those max/min limits with the adjustBaseColor function, so there is no need for conditional sorting here:
-//// TODO: currently a negative increment is yielding negative output although it does not appear to be affecting the designed functionality by the eye test -- still this needs to be looked into;
+//// TODO(possibly): currently a negative increment is yielding negative output although it does not appear to be affecting the designed functionality by the eye test -- still this needs to be looked into;
 export const adjustColor = (rgbArr: string[], increment: number) => {
   const adjustedArr: any = []; // darkened or lightened rgb values
   const incrementAmount = 255 * increment;
@@ -125,6 +125,6 @@ export const generateShadingPalette = (rgbArr: string[]) => {
     //
     colorArray.push(colorSubArray);
   }
-  //// TODO: some of the values returned here are numbers, some are strings -- why?
+  //// TODO(possibly): some of the values returned here are numbers, some are strings -- why?
   return colorArray; // output format: ["#r", "#g", "#b", "rgb(#r,#g,#b)"]
 };
