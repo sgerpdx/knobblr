@@ -15,25 +15,6 @@ const handleTestClick = () => {
   console.log("Click handler working.");
 };
 
-const UserEventDemo = () => {
-  const [counter, setCounter] = useState(0);
-  const handleCountIncrement = () => {
-    setCounter(1);
-  };
-  return (
-    <>
-      <TactileButton
-        onClick={handleCountIncrement}
-        label="Increase"
-        width={80}
-        fillColor="green"
-        strokeColor="white"
-      />
-      <p id="count-display">Current Count: {counter}</p>
-    </>
-  );
-};
-
 describe("TactileButton", () => {
   test("renders the TactileButton component", () => {
     // Render the component:
