@@ -1,13 +1,16 @@
-import React, { useState } from "react";
-import { screen, render, queryByAttribute } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import React from "react";
+import {
+  screen,
+  render,
+  queryByAttribute,
+  fireEvent,
+} from "@testing-library/react";
 
 import TactileButton from "./TactileButton";
 
 // DOM locator for svg elements:
 const getById = queryByAttribute.bind(null, "id");
 // Dummy prop to pass into onClick:
-//// TODO: Find a way to test onClick via an updated value possibly in a special test-only 'implementation component'.
 const handleTestClick = () => {
   console.log("Click handler working.");
 };
@@ -22,16 +25,12 @@ describe("TactileButton", () => {
         width={100}
         fillColor="blue"
         strokeColor="orange"
-        mode="rubber"
       />
     );
     //screen.debug();
-
-    // Fire user event to test click:
-    userEvent.click(screen.getByRole("button"));
   });
 
-  test("renders SVG elements in TactileButton component", () => {
+  test("renders SVG elements with correct dimensions and coordinates in TactileButton component", () => {
     const dom = render(
       <TactileButton
         onClick={handleTestClick}
@@ -39,7 +38,6 @@ describe("TactileButton", () => {
         width={100}
         fillColor="orange"
         strokeColor="white"
-        mode="rubber"
       />
     );
     //screen.debug();
@@ -88,7 +86,6 @@ describe("TactileButton", () => {
         width={120}
         fillColor="mediumblue"
         strokeColor="pink"
-        mode="rubber"
       />
     );
     //screen.debug();
@@ -129,5 +126,22 @@ describe("TactileButton", () => {
     // Test the fill (intuitively the 'stroke' or 'color') attribute of the svg <text> element used for the button label:
     const buttonLabel = screen.getByRole("label");
     expect(buttonLabel.getAttribute("fill")).toBe("pink");
+  });
+
+  test("TactileButton calls onClick prop when clicked", () => {
+    //screen.debug();
+
+    const handleClick = jest.fn();
+    render(
+      <TactileButton
+        onClick={handleClick}
+        label="Start"
+        width={80}
+        fillColor="green"
+        strokeColor="white"
+      />
+    );
+    fireEvent.click(screen.getByText(/start/i));
+    expect(handleClick).toHaveBeenCalledTimes(1);
   });
 });
