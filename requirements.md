@@ -68,7 +68,9 @@ Acceptance Tests:
 
 #### TactileButton Component:
 
-![button dimensions description](https://eebimurzhljxfivqzvuz.supabase.co/storage/v1/object/sign/knobblr-assets/button-tactile_dimensions.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJrbm9iYmxyLWFzc2V0cy9idXR0b24tdGFjdGlsZV9kaW1lbnNpb25zLnBuZyIsImlhdCI6MTY2NjM5NDQwMywiZXhwIjoxOTgxNzU0NDAzfQ.qSfxY210c-tl2JBpoBmFJbHSUzdqhOmmjGDPSagwkYo)
+![tactile button component dimensions description](https://eebimurzhljxfivqzvuz.supabase.co/storage/v1/object/sign/knobblr-assets/TactileButton_%20Dimensions.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJrbm9iYmxyLWFzc2V0cy9UYWN0aWxlQnV0dG9uXyBEaW1lbnNpb25zLnBuZyIsImlhdCI6MTY2NjQ3MTMyMiwiZXhwIjoxOTgxODMxMzIyfQ.EW9TptLHcGCMLyqkfhqQAZtUF4fsM2aK9xEzlfqSC-w)
+
+![tactile button component shading palette description](https://eebimurzhljxfivqzvuz.supabase.co/storage/v1/object/sign/knobblr-assets/TactileButton_%20Shading.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJrbm9iYmxyLWFzc2V0cy9UYWN0aWxlQnV0dG9uXyBTaGFkaW5nLnBuZyIsImlhdCI6MTY2NjQ3MTMyMCwiZXhwIjoxOTgxODMxMzIwfQ.E8reVzjT3GQ7USiNzCSH05gTxLzknGeIZ3EmOOU40lY)
 
 ---
 
