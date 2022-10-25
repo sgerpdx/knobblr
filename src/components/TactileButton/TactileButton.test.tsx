@@ -12,6 +12,25 @@ const handleTestClick = () => {
   console.log("Click handler working.");
 };
 
+const UserEventDemo = () => {
+  const [counter, setCounter] = useState(0);
+  const handleCountIncrement = () => {
+    setCounter(1);
+  };
+  return (
+    <>
+      <TactileButton
+        onClick={handleCountIncrement}
+        label="Increase"
+        width={80}
+        fillColor="green"
+        strokeColor="white"
+      />
+      <p id="count-display">Current Count: {counter}</p>
+    </>
+  );
+};
+
 describe("TactileButton", () => {
   test("renders the TactileButton component", () => {
     // Render the component:
@@ -22,7 +41,6 @@ describe("TactileButton", () => {
         width={100}
         fillColor="blue"
         strokeColor="orange"
-        mode="rubber"
       />
     );
     //screen.debug();
@@ -39,7 +57,6 @@ describe("TactileButton", () => {
         width={100}
         fillColor="orange"
         strokeColor="white"
-        mode="rubber"
       />
     );
     //screen.debug();
@@ -88,7 +105,6 @@ describe("TactileButton", () => {
         width={120}
         fillColor="mediumblue"
         strokeColor="pink"
-        mode="rubber"
       />
     );
     //screen.debug();
@@ -129,5 +145,12 @@ describe("TactileButton", () => {
     // Test the fill (intuitively the 'stroke' or 'color') attribute of the svg <text> element used for the button label:
     const buttonLabel = screen.getByRole("label");
     expect(buttonLabel.getAttribute("fill")).toBe("pink");
+  });
+
+  test("renders correct fill and stroke colors based on user-defined prop values", () => {
+    const dom = render(<UserEventDemo />);
+    screen.debug();
+
+    //userEvent
   });
 });
