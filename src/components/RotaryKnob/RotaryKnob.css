@@ -1,0 +1,17 @@
+.rotaryContainer {
+  display: flex;
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background-color: lightblue;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.labelCircle {
+  display: flex;
+  position: absolute;
+  z-index: 1;
+  background-color: white;
+}
