@@ -179,7 +179,7 @@ const getCoordinateData = (
   //
   for (let i = 0; i < trigData.length; i++) {
     // Call the function to adjust the coordinates for circleCenter:
-    let thisPointSubArray = findAdjustedCoordinates(
+    let thisLabelSubArray = findAdjustedCoordinates(
       counter,
       trigData[i],
       labelRadius,
@@ -189,22 +189,22 @@ const getCoordinateData = (
     // Find the lower and upper boundaries for the circle segment centered on each angle, with 'null' handling undefined slopes when point is on the y-axis:
     const minAngleBoundary = thisPointAngle - standardAngleBoundary || null;
     const maxAngleBoundary = thisPointAngle + standardAngleBoundary || null;
-    // Add a semicircle-signifier to thisPointSubArray to assist with locating the correct point give the eventual MouseEvent (L= left, C= center (y) axis, R= right) using the x-coordinate relative to zero as the determining factor:
+    // Add a semicircle-signifier to thisLabelSubArray to assist with locating the correct point give the eventual MouseEvent (L= left, C= center (y) axis, R= right) using the x-coordinate relative to zero as the determining factor:
     // Initialize a variable to track point: Left/Center(axis)/Right (see below)
     let hemisphereMarker = "";
-    if (thisPointSubArray[1] < circleCenter.x) {
+    if (thisLabelSubArray[1] && thisLabelSubArray[1] < circleCenter.x) {
       hemisphereMarker = "L";
-    } else if (thisPointSubArray[1] > circleCenter.x) {
+    } else if (thisLabelSubArray[1] && thisLabelSubArray[1] > circleCenter.x) {
       hemisphereMarker = "R";
     } else {
       hemisphereMarker = "C";
     }
-    thisPointSubArray.push(
+    thisLabelSubArray.push(
       minAngleBoundary,
       maxAngleBoundary,
       hemisphereMarker
     );
-    coordinateArray.push(thisPointSubArray);
+    coordinateArray.push(thisLabelSubArray);
     const newCounter = Number(counter) + 1;
     counter = newCounter.toString();
   }
