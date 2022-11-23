@@ -14,14 +14,14 @@ export const calculateKnobDimensions = (
   const svgFontSize = outerRadius / 4;
   const circleCenter = { x: centerDistance, y: centerDistance };
 
-  return [
-    centerDistance,
-    containerSize,
+  return {
     outerRadius,
     innerRadius,
+    centerDistance,
+    containerSize,
     innerCircleDistance,
     pointerPath,
     svgFontSize,
     circleCenter,
-  ];
+  };
 };
