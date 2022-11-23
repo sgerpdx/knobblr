@@ -4,7 +4,7 @@
 //// knobDiameter(<int>)
 //// borderPadding(<int>)
 
-import { CircleCenter } from "../../data/interfaces";
+import { CircleCenter, LabelData, TrigData } from "../../data/interfaces";
 
 // Phase One: Calculate all basic geometric and trigonometric data (i.e. ratios):
 
@@ -51,11 +51,17 @@ export const getTrigonometricData = (
     //const currentRadians = (angleQuadrantData[1] * Math.PI) / 180;
     const currentRadians = (currentDegrees * Math.PI) / 180;
     // initialize an array with [sin, cos, tan] for the angle:
-    let currentTrigArray = calculateTrigonometry(currentRadians);
-    // add [quadrant, degrees, radians] to the array:
-    currentTrigArray.push(angleQuadrantData[0], currentDegrees, currentRadians);
+    let currentLabelTrigDataArray = calculateTrigonometry(currentRadians);
+    let currentTrigData: TrigData = {
+      sin: currentLabelTrigDataArray[0],
+      cos: currentLabelTrigDataArray[1],
+      tan: currentLabelTrigDataArray[2],
+      quadrant: angleQuadrantData[0],
+      degrees: currentDegrees,
+      radians: currentRadians
+    }
     // push the array into the main output array:
-    trigData.push(currentTrigArray);
+    trigData.push(currentTrigData);
     // handle incrementing to set up the next run through the loop:
     counter++;
     // conditional for incrementing so that degrees resets to 0 when it reaches or exceeds 360:
@@ -72,7 +78,10 @@ export const getTrigonometricData = (
 // Phase Two: Calculate the specific coordinates of the labels on the rotary knob based on the trigData combined with information about the center and radius of the circle:
 
 // Catch points on the y-axis which have an undefined slope:
-export const filterForVerticalSlope = (xCoordinate: number, yCoordinate: number) => {
+export const filterForVerticalSlope = (
+  xCoordinate: number,
+  yCoordinate: number
+) => {
   if (xCoordinate === 0) return null;
   return yCoordinate / xCoordinate;
 };
@@ -80,7 +89,7 @@ export const filterForVerticalSlope = (xCoordinate: number, yCoordinate: number)
 // Determine (x,y) for SVG relative to circleCenter -- call in getCoordinateData:
 export const findAdjustedCoordinates = (
   counter: string,
-  data: number[],
+  data: TrigData,
   radius: number,
   circleCenter: CircleCenter
 ) => {
@@ -88,12 +97,12 @@ export const findAdjustedCoordinates = (
   let currentCoordinateArray = [];
   //
   //// Q2, i.e. 'upper left' -->
-  if (data[3] === 4) {
+  if (data.quadrant === 4) {
     // calculate (x,y) using trigData...
     // Relative to the 'most recent perpendicular axis' x = adjacent (horizontal); radius = hypotenuse; cos = adjacent/hypotenuse; therefore x = cos * radius:
-    const xCoord = data[1] * radius * -1;
+    const xCoord = data.cos * radius * -1;
     // Relative to the 'most recent perpendicular axis' y = opposite (vertical); radius = hypotenuse; sin = opposite/hypotenuse; therefore y = sin * radius:
-    const yCoord = data[0] * radius * -1;
+    const yCoord = data.sin * radius * -1;
     // calculate the slope of the line intersecting the (x,y) point:
     const currentSlope = filterForVerticalSlope(xCoord, yCoord);
     // adjust the coordinates for center of circle (which will generally never be (0,0) in these cases):
@@ -109,9 +118,9 @@ export const findAdjustedCoordinates = (
     );
     //
     //// Q3, i.e. 'lower left' -->
-  } else if (data[3] === 3) {
-    const xCoord = data[1] * radius * -1;
-    const yCoord = data[0] * radius * -1;
+  } else if (data.quadrant === 3) {
+    const xCoord = data.cos * radius * -1;
+    const yCoord = data.sin * radius * -1;
     const currentSlope = filterForVerticalSlope(xCoord, yCoord);
     const adjustedXCoord = xCoord + circleCenter.x;
     const adjustedYCoord = yCoord + circleCenter.y;
@@ -123,9 +132,9 @@ export const findAdjustedCoordinates = (
     );
     //
     //// Q4, i.e. 'lower right' -->
-  } else if (data[3] === 2) {
-    const xCoord = data[1] * radius * -1;
-    const yCoord = data[0] * radius * -1;
+  } else if (data.quadrant === 2) {
+    const xCoord = data.cos * radius * -1;
+    const yCoord = data.sin * radius * -1;
     const currentSlope = filterForVerticalSlope(xCoord, yCoord);
     const adjustedXCoord = xCoord + circleCenter.x;
     const adjustedYCoord = yCoord + circleCenter.y;
@@ -139,8 +148,8 @@ export const findAdjustedCoordinates = (
     //// Q1, i.e. 'upper right' -->
   } else {
     // Note: I do no know why both of these need to be made negative, but doing so results in the correct coordinates; otherwise the points would be in Q3 (lower left)...research this...
-    const xCoord = data[1] * radius * -1;
-    const yCoord = data[0] * radius * -1;
+    const xCoord = data.cos * radius * -1;
+    const yCoord = data.sin * radius * -1;
     const currentSlope = filterForVerticalSlope(xCoord, yCoord);
     const adjustedXCoord = xCoord + circleCenter.x;
     const adjustedYCoord = yCoord + circleCenter.y;
@@ -156,7 +165,7 @@ export const findAdjustedCoordinates = (
 
 // Take in output of getTrigonometricData + user inputs of diameter and padding and return an array of arrays with the information needed to generate the SVG for the rotary knob and to inform state updates triggered by user click events:
 export const getCoordinateData = (
-  trigData: number[][],
+  trigData: TrigData[],
   diameter: number,
   padding: number
 ) => {
@@ -174,7 +183,7 @@ export const getCoordinateData = (
   };
   const standardAngleBoundary = 360 / trigData.length / 2; // degrees on either side of point that should map to that point on MouseEvent;
   // Initialize an output array for holding coordinates
-  let coordinateArray = [];
+  let coordinateDataArray = [];
   let counter = "0";
   //
   for (let i = 0; i < trigData.length; i++) {
@@ -185,10 +194,10 @@ export const getCoordinateData = (
       labelRadius,
       circleCenter
     );
-    const thisPointAngle = trigData[i][4];
+    const thisPointAngle = trigData[i].degrees;
     // Find the lower and upper boundaries for the circle segment centered on each angle, with 'null' handling undefined slopes when point is on the y-axis:
-    const minAngleBoundary = thisPointAngle - standardAngleBoundary || null;
-    const maxAngleBoundary = thisPointAngle + standardAngleBoundary || null;
+    const currentMinAngleBoundary = thisPointAngle - standardAngleBoundary || null;
+    const currentMaxAngleBoundary = thisPointAngle + standardAngleBoundary || null;
     // Add a semicircle-signifier to thisLabelSubArray to assist with locating the correct point give the eventual MouseEvent (L= left, C= center (y) axis, R= right) using the x-coordinate relative to zero as the determining factor:
     // Initialize a variable to track point: Left/Center(axis)/Right (see below)
     let hemisphereMarker = "";
@@ -199,14 +208,20 @@ export const getCoordinateData = (
     } else {
       hemisphereMarker = "C";
     }
-    thisLabelSubArray.push(
-      minAngleBoundary,
-      maxAngleBoundary,
-      hemisphereMarker
-    );
-    coordinateArray.push(thisLabelSubArray);
+    //
+    const coordinateDataObject: LabelData = {
+      label: thisLabelSubArray[0],
+      xCoord: thisLabelSubArray[1],
+      yCoord: thisLabelSubArray[2],
+      slope: thisLabelSubArray[3],
+      minAngleBoundary: currentMinAngleBoundary,
+      maxAngleBoundary: currentMaxAngleBoundary,
+      hemisphere: hemisphereMarker
+    }
+    //
+    coordinateDataArray.push(coordinateDataObject);
     const newCounter = Number(counter) + 1;
     counter = newCounter.toString();
   }
-  return coordinateArray; // [[label, x, y, slope, angleMin, angleMax, hemisphere], ... ]
+  return coordinateDataArray; // [[label, x, y, slope, angleMin, angleMax, hemisphere], ... ]
 };

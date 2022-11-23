@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from "react";
 import "./RotaryKnob.css";
+import { LabelData, TrigData } from "../../data/interfaces";
 
 import { calculateKnobDimensions } from "../../utils/rotaryKnob/shapeCalculation";
 import {
   getTrigonometricData,
   getCoordinateData,
 } from "../../utils/rotaryKnob/spatialCalculation";
-// import from rotaryControl
+import {
+  convertCoordinatesToAngle,
+  simplifyLabelArray,
+  matchAngleSelection,
+} from "../../utils/rotaryKnob/rotaryControl";
 
 // consider creating an interface for the paramsData
 
 export interface RotaryKnobProps {
-  // click handler provision... onClick?:
+  onClick: React.DOMAttributes<HTMLDivElement>;
   diameter: number;
   labelCount: number; // the number of setting increments
   fillColor: string;
@@ -37,7 +42,7 @@ const RotaryKnob = (props: RotaryKnobProps) => {
     svgFontSize: 10,
     circleCenter: { x: 0, y: 0 },
   });
-  const [labelData, setLabelData] = useState<(string | number | null)[][]>();
+  const [labelData, setLabelData] = useState<LabelData[]>();
 
   // Rotation management state variables:
   const [hasBeenClicked, setHasBeenClicked] = useState(false);
@@ -51,6 +56,29 @@ const RotaryKnob = (props: RotaryKnobProps) => {
     y: 0,
     degrees: 90,
   });
+
+  // Event handler for mouse click:
+  const handleClickEvent = (event: any) => {
+    const circleCenter = rotaryKnobParams.circleCenter;
+    //
+    const xClick = event.nativeEvent.offsetX;
+    const yClick = event.nativeEvent.offsetY;
+    const clickDegrees = convertCoordinatesToAngle(
+      xClick,
+      yClick,
+      circleCenter
+    );
+    setClickData({ x: xClick, y: yClick, degrees: clickDegrees });
+    //
+    const currentDegrees = currentSelection.degrees;
+    //const relevantLabelData = simplifyLabelArray(labelData);
+    const rotationData = matchAngleSelection(
+      clickDegrees,
+      currentDegrees,
+      labelData
+    );
+    //
+  };
 
   // Initial useEffect sets up knob dimensions as per props:
   useEffect(() => {
@@ -66,7 +94,7 @@ const RotaryKnob = (props: RotaryKnobProps) => {
   useEffect(() => {
     //
     // here run the calculations for the labels (maybe should be in the first useEffect hook)
-    const newTrigData = getTrigonometricData(
+    const newTrigData: TrigData[] = getTrigonometricData(
       props.labelCount,
       props.zeroAngle || 0
     );
@@ -86,7 +114,12 @@ const RotaryKnob = (props: RotaryKnobProps) => {
 
   //
   return (
-    <div className="rotaryContainer">
+    <div
+      className="rotaryContainer"
+      title="click to select setting"
+      aria-label="rotary knob control"
+      onClick={handleClickEvent}
+    >
       <svg className="labelCircle">
         <circle />
         <g>

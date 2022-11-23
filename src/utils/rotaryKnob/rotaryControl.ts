@@ -1,6 +1,6 @@
 import { CircleCenter, LabelData } from "../../data/interfaces";
 
-const convertCoordinatesToAngle = (
+export const convertCoordinatesToAngle = (
   x: number,
   y: number,
   circleCenter: CircleCenter
@@ -31,39 +31,48 @@ const convertCoordinatesToAngle = (
   return relativeAngle;
 };
 
-// not sure if labelData can be specified as an interface, given that it is an array with complex contents -- research TypeScript docs...
-const matchAngleSelection = (
-  clickDegrees: number,
-  currentDegrees: number,
-  labelData: []
-) => {
-  for (let i = 0; i < labelData.length; i++) {
-    const currentLabelData = labelData[i];
-    const maxDegrees = currentLabelData[5];
-    const minDegrees = currentLabelData[4];
-    //
-    // this item should be simpler to know...
-    const degreesToCenter = (maxDegrees - minDegrees) / 2;
-    //
-    if (clickDegrees >= minDegrees && clickDegrees < maxDegrees) {
-      const centerDegrees = maxDegrees - degreesToCenter;
-      const rotationNeeded = centerDegrees - currentDegrees;
-      console.log("centerDeg/rotationNeeded:", centerDegrees, rotationNeeded);
-      //
-      return (
-        {
-          target: centerDegrees,
-          rotation: rotationNeeded,
-          label: currentLabelData[0],
-        } || "Error"
-      );
-    } else {
-      console.log(`No match for ${currentLabelData}`);
-    }
+//
+export const simplifyLabelArray = (labelArr: []) => {
+  let simplifiedLabelArr: [] = [];
+  for (let i = 0; i < labelArr.length; i++) {
+    const currentItem = labelArr[i];
+    simplifiedLabelArr.push(currentItem[0], currentItem[4], currentItem[5]);
   }
+  return simplifiedLabelArr;
 };
 
-module.exports = {
-  convertCoordinatesToAngle,
-  matchAngleSelection,
+// not sure if labelData can be specified as an interface, given that it is an array with complex contents -- research TypeScript docs...
+export const matchAngleSelection = (
+  clickDegrees: number,
+  currentDegrees: number,
+  labelData: LabelData[] | undefined
+) => {
+  if (labelData) {
+    for (let i = 0; i < labelData.length; i++) {
+      const currentLabelData = labelData[i];
+      const maxDegrees = currentLabelData.maxAngleBoundary || 0;
+      const minDegrees = currentLabelData.minAngleBoundary || 0;
+      //
+      // this item should be simpler to know...
+      const degreesToCenter = (maxDegrees - minDegrees) / 2;
+      //
+      if (clickDegrees >= minDegrees && clickDegrees < maxDegrees) {
+        const centerDegrees = maxDegrees - degreesToCenter;
+        const rotationNeeded = centerDegrees - currentDegrees;
+        console.log("centerDeg/rotationNeeded:", centerDegrees, rotationNeeded);
+        //
+        return (
+          {
+            target: centerDegrees,
+            rotation: rotationNeeded,
+            label: currentLabelData.label,
+          } || "Error"
+        );
+      } else {
+        console.log(`No match for ${currentLabelData}`);
+      }
+    }
+  } else {
+    console.log("Error: LabelData undefined");
+  }
 };

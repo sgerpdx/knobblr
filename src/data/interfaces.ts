@@ -8,12 +8,21 @@ export interface CircleCenter {
   y: number;
 }
 
+export interface TrigData {
+  sin: number;
+  cos: number;
+  tan: number;
+  quadrant: number;
+  degrees: number;
+  radians: number;
+}
+
 export interface LabelData {
-  label: string;
-  xCoord: number;
-  yCoord: number;
-  slope: number;
-  minAngleBoundary: number;
-  maxAngleBoundary: number;
+  label: string | number | null;
+  xCoord: string | number | null;
+  yCoord: string | number | null;
+  slope: string | number | null;
+  minAngleBoundary: number | null;
+  maxAngleBoundary: number | null;
   hemisphere: string;
 }
