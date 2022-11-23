@@ -26,3 +26,8 @@ export interface LabelData {
   maxAngleBoundary: number | null;
   hemisphere: string;
 }
+
+export interface CurrentSelection {
+  label: string | number | null;
+  degrees: number;
+}

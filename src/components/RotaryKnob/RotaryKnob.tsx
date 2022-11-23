@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./RotaryKnob.css";
-import { LabelData, TrigData } from "../../data/interfaces";
+import { LabelData, TrigData, CurrentSelection } from "../../data/interfaces";
 
 import { calculateKnobDimensions } from "../../utils/rotaryKnob/shapeCalculation";
 import {
@@ -42,15 +42,27 @@ const RotaryKnob = (props: RotaryKnobProps) => {
     svgFontSize: 10,
     circleCenter: { x: 0, y: 0 },
   });
-  const [labelData, setLabelData] = useState<LabelData[]>();
+  const [labelData, setLabelData] = useState<LabelData[]>([
+    {
+      label: 0,
+      xCoord: 60,
+      yCoord: 40,
+      slope: 1,
+      minAngleBoundary: 120,
+      maxAngleBoundary: 150,
+      hemisphere: "R",
+    },
+  ]);
 
   // Rotation management state variables:
+  //// this was used in the demo code with a form submission:
   const [hasBeenClicked, setHasBeenClicked] = useState(false);
   const [degreeShift, setDegreeShift] = useState("rotate(0 50 50");
-  const [currentSelection, setCurrentSelection] = useState({
+  const [currentSelection, setCurrentSelection] = useState<CurrentSelection>({
     label: "0",
     degrees: 90,
   });
+  //// we are not currently using this variable:
   const [clickData, setClickData] = useState({
     x: 0,
     y: 0,
@@ -78,6 +90,14 @@ const RotaryKnob = (props: RotaryKnobProps) => {
       labelData
     );
     //
+    if (rotationData) {
+      const target = rotationData.target - (props.zeroAngle || 90);
+      console.log("Target:", target, "CircleCenter:", circleCenter);
+      const newLabel = rotationData.label;
+      setDegreeShift(`rotate(${target} ${circleCenter.x} ${circleCenter.y})`);
+      setCurrentSelection({ label: newLabel, degrees: target });
+      setHasBeenClicked(true);
+    }
   };
 
   // Initial useEffect sets up knob dimensions as per props:
@@ -111,7 +131,7 @@ const RotaryKnob = (props: RotaryKnobProps) => {
   //   useEffect(() => {
   // //
   //   }, []);
-
+  if (loading) return <h4>Loading...</h4>;
   //
   return (
     <div
@@ -120,13 +140,53 @@ const RotaryKnob = (props: RotaryKnobProps) => {
       aria-label="rotary knob control"
       onClick={handleClickEvent}
     >
-      <svg className="labelCircle">
-        <circle />
-        <g>
-          <circle />
-          <path />
+      <svg
+        className="labelCircle"
+        width={rotaryKnobParams.containerSize}
+        height={rotaryKnobParams.containerSize}
+      >
+        <circle
+          aria-label="rotary knob settings"
+          cx={rotaryKnobParams.centerDistance}
+          cy={rotaryKnobParams.centerDistance}
+          r={rotaryKnobParams.outerRadius}
+          fill={props.fillColor}
+          stroke={props.strokeColor}
+          strokeWidth="2"
+        />
+        <g aria-label="rotary knob top dial" transform={degreeShift}>
+          <circle
+            cx={rotaryKnobParams.centerDistance}
+            cy={rotaryKnobParams.centerDistance}
+            r={rotaryKnobParams.innerRadius}
+            fill={props.fillColor}
+            stroke={props.strokeColor}
+            strokeWidth="2"
+          />
+          <path
+            stroke={props.strokeColor}
+            strokeWidth="4"
+            d={rotaryKnobParams.pointerPath}
+          />
         </g>
-        <g></g>
+        <g
+          fontSize={rotaryKnobParams.svgFontSize}
+          fontFamily="sans-serif"
+          fontWeight="normal"
+          fill={props.fillColor}
+          stroke={props.strokeColor}
+          textAnchor="middle"
+        >
+          {labelData?.map((label) => (
+            <text
+              key={label.label}
+              x={label.xCoord?.toString()}
+              y={label.yCoord?.toString()}
+            >
+              {label.label}
+            </text>
+          ))}
+        </g>
       </svg>
     </div>
   );
