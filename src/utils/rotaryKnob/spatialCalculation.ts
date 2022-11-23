@@ -8,7 +8,7 @@ import { CircleCenter } from "../../data/interfaces";
 
 // Phase One: Calculate all basic geometric and trigonometric data (i.e. ratios):
 
-const determineAngleQuadrant = (angle: number) => {
+export const determineAngleQuadrant = (angle: number) => {
   //
   if (angle >= 270 && angle < 360) {
     const offsetDegrees = angle - 270;
@@ -25,14 +25,14 @@ const determineAngleQuadrant = (angle: number) => {
   }
 };
 
-const calculateTrigonometry = (radians: number) => {
+export const calculateTrigonometry = (radians: number) => {
   const currentSin = Math.sin(radians);
   const currentCos = Math.cos(radians);
   const currentTan = Math.tan(radians);
   return [currentSin, currentCos, currentTan];
 };
 
-const getTrigonometricData = (
+export const getTrigonometricData = (
   incrementCount: number,
   startingPosition: number
 ) => {
@@ -72,13 +72,13 @@ const getTrigonometricData = (
 // Phase Two: Calculate the specific coordinates of the labels on the rotary knob based on the trigData combined with information about the center and radius of the circle:
 
 // Catch points on the y-axis which have an undefined slope:
-const filterForVerticalSlope = (xCoordinate: number, yCoordinate: number) => {
+export const filterForVerticalSlope = (xCoordinate: number, yCoordinate: number) => {
   if (xCoordinate === 0) return null;
   return yCoordinate / xCoordinate;
 };
 
 // Determine (x,y) for SVG relative to circleCenter -- call in getCoordinateData:
-const findAdjustedCoordinates = (
+export const findAdjustedCoordinates = (
   counter: string,
   data: number[],
   radius: number,
@@ -155,8 +155,8 @@ const findAdjustedCoordinates = (
 };
 
 // Take in output of getTrigonometricData + user inputs of diameter and padding and return an array of arrays with the information needed to generate the SVG for the rotary knob and to inform state updates triggered by user click events:
-const getCoordinateData = (
-  trigData: [number[]],
+export const getCoordinateData = (
+  trigData: number[][],
   diameter: number,
   padding: number
 ) => {
@@ -209,9 +209,4 @@ const getCoordinateData = (
     counter = newCounter.toString();
   }
   return coordinateArray; // [[label, x, y, slope, angleMin, angleMax, hemisphere], ... ]
-};
-
-module.exports = {
-  getTrigonometricData,
-  getCoordinateData,
 };

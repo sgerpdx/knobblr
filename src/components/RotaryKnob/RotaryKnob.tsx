@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import "./RotaryKnob.css";
 
 import { calculateKnobDimensions } from "../../utils/rotaryKnob/shapeCalculation";
+import {
+  getTrigonometricData,
+  getCoordinateData,
+} from "../../utils/rotaryKnob/spatialCalculation";
 // import from rotaryControl
-// import from spatialCalculation
 
 // consider creating an interface for the paramsData
 
@@ -34,11 +37,11 @@ const RotaryKnob = (props: RotaryKnobProps) => {
     svgFontSize: 10,
     circleCenter: { x: 0, y: 0 },
   });
-  const [labelData, setLabelData] = useState();
+  const [labelData, setLabelData] = useState<(string | number | null)[][]>();
 
   // Rotation management state variables:
   const [hasBeenClicked, setHasBeenClicked] = useState(false);
-  const [degreeShift, setDegreeShift] = useState(0);
+  const [degreeShift, setDegreeShift] = useState("rotate(0 50 50");
   const [currentSelection, setCurrentSelection] = useState({
     label: "0",
     degrees: 90,
@@ -63,6 +66,18 @@ const RotaryKnob = (props: RotaryKnobProps) => {
   useEffect(() => {
     //
     // here run the calculations for the labels (maybe should be in the first useEffect hook)
+    const newTrigData = getTrigonometricData(
+      props.labelCount,
+      props.zeroAngle || 0
+    );
+    console.log("NTD:", newTrigData);
+    const newCoordData = getCoordinateData(
+      newTrigData,
+      props.diameter,
+      props.padding || 0
+    );
+    console.log("NCD:", newCoordData);
+    setLabelData(newCoordData);
   }, [rotaryKnobParams]);
 
   //   useEffect(() => {
