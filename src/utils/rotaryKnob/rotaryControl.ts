@@ -42,6 +42,7 @@ const matchAngleSelection = (
     const maxDegrees = currentLabelData[5];
     const minDegrees = currentLabelData[4];
     //
+    // this item should be simpler to know...
     const degreesToCenter = (maxDegrees - minDegrees) / 2;
     //
     if (clickDegrees >= minDegrees && clickDegrees < maxDegrees) {
