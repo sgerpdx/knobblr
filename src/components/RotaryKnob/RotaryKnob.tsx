@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import "./RotaryKnob.css";
 import { LabelData, TrigData, CurrentSelection } from "../../data/interfaces";
 
-import { calculateKnobDimensions } from "../../utils/rotaryKnob/shapeCalculation";
+import { calculateKnobDimensions } from "../../utils/rotaryKnobUtils/shapeCalculation";
 import {
   getTrigonometricData,
   getCoordinateData,
-} from "../../utils/rotaryKnob/spatialCalculation";
+} from "../../utils/rotaryKnobUtils/spatialCalculation";
 import {
   convertCoordinatesToAngle,
   simplifyLabelArray,
   matchAngleSelection,
-} from "../../utils/rotaryKnob/rotaryControl";
+} from "../../utils/rotaryKnobUtils/rotaryControl";
 
 // consider creating an interface for the paramsData
 
@@ -58,6 +58,7 @@ const RotaryKnob = (props: RotaryKnobProps) => {
   //// this was used in the demo code with a form submission:
   const [hasBeenClicked, setHasBeenClicked] = useState(false);
   const [degreeShift, setDegreeShift] = useState("rotate(0 50 50");
+  const [containerDimension, setContainerDimension] = useState(100);
   const [currentSelection, setCurrentSelection] = useState<CurrentSelection>({
     label: "0",
     degrees: 90,
@@ -109,6 +110,7 @@ const RotaryKnob = (props: RotaryKnobProps) => {
       props.externalLabels
     );
     setRotaryKnobParams(newRotaryParams);
+    setContainerDimension(newRotaryParams.containerSize);
   }, []);
 
   useEffect(() => {

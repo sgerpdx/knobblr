@@ -1,9 +1,8 @@
 .rotaryContainer {
   display: flex;
   position: relative;
-  width: 100px;
-  height: 100px;
-  background-color: lightblue;
+  /* width: 100px;
+  height: 100px; */
   justify-content: center;
   align-items: center;
   cursor: pointer;
