@@ -57,7 +57,7 @@ const RotaryKnob = (props: RotaryKnobProps) => {
   // Rotation management state variables:
   //// this was used in the demo code with a form submission:
   const [hasBeenClicked, setHasBeenClicked] = useState(false);
-  const [degreeShift, setDegreeShift] = useState("rotate(0 50 50");
+  const [degreeShift, setDegreeShift] = useState("rotate(0 50 50)");
   const [containerDimension, setContainerDimension] = useState(100);
   const [currentSelection, setCurrentSelection] = useState<CurrentSelection>({
     label: "0",
@@ -175,8 +175,7 @@ const RotaryKnob = (props: RotaryKnobProps) => {
           fontSize={rotaryKnobParams.svgFontSize}
           fontFamily="sans-serif"
           fontWeight="normal"
-          fill={props.fillColor}
-          stroke={props.strokeColor}
+          fill={props.strokeColor}
           textAnchor="middle"
         >
           {labelData?.map((label) => (
