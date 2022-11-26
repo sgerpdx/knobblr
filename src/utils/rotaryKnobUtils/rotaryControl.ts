@@ -59,6 +59,8 @@ export const matchAngleSelection = (
       if (clickDegrees >= minDegrees && clickDegrees < maxDegrees) {
         const centerDegrees = maxDegrees - degreesToCenter;
         const rotationNeeded = centerDegrees - currentDegrees;
+        console.log("///---ClickDegrees:", clickDegrees);
+        console.log("***---CurrentDegrees:", currentDegrees);
         console.log("centerDeg/rotationNeeded:", centerDegrees, rotationNeeded);
         //
         return (
