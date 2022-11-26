@@ -58,8 +58,8 @@ export const getTrigonometricData = (
       tan: currentLabelTrigDataArray[2],
       quadrant: angleQuadrantData[0],
       degrees: currentDegrees,
-      radians: currentRadians
-    }
+      radians: currentRadians,
+    };
     // push the array into the main output array:
     trigData.push(currentTrigData);
     // handle incrementing to set up the next run through the loop:
@@ -196,8 +196,16 @@ export const getCoordinateData = (
     );
     const thisPointAngle = trigData[i].degrees;
     // Find the lower and upper boundaries for the circle segment centered on each angle, with 'null' handling undefined slopes when point is on the y-axis:
-    const currentMinAngleBoundary = thisPointAngle - standardAngleBoundary || null;
-    const currentMaxAngleBoundary = thisPointAngle + standardAngleBoundary || null;
+    let currentMinAngleBoundary = 0;
+    if (thisPointAngle >= 330) {
+      // Because angle is considered <0 but boundary is registered as >=330:
+      currentMinAngleBoundary = thisPointAngle - 360;
+    } else {
+      // Standard calculation can be made as per:
+      currentMinAngleBoundary = thisPointAngle - standardAngleBoundary;
+    }
+    const currentMaxAngleBoundary =
+      thisPointAngle + standardAngleBoundary || null;
     // Add a semicircle-signifier to thisLabelSubArray to assist with locating the correct point give the eventual MouseEvent (L= left, C= center (y) axis, R= right) using the x-coordinate relative to zero as the determining factor:
     // Initialize a variable to track point: Left/Center(axis)/Right (see below)
     let hemisphereMarker = "";
@@ -216,8 +224,8 @@ export const getCoordinateData = (
       slope: thisLabelSubArray[3],
       minAngleBoundary: currentMinAngleBoundary,
       maxAngleBoundary: currentMaxAngleBoundary,
-      hemisphere: hemisphereMarker
-    }
+      hemisphere: hemisphereMarker,
+    };
     //
     coordinateDataArray.push(coordinateDataObject);
     const newCounter = Number(counter) + 1;
