@@ -8,6 +8,7 @@ import { ShadeData } from "../../data/interfaces";
 //// NEW: The percentageArr for the adjustment will be defined by itself here, and then called in the other functions. This in part because we want to be able to edit it in one place.
 //// Part of this is an outgrowth of the need to address the unsatisfactory adjustment/palette results from uniform logic being applied to super saturated/desaturated colors, e.g. html 'red' with its 255/0/0 rgb values;
 //// What we want to do is take any incoming 255 and reduce it by the highest percentage value, e.g. if said value is 0.125 then we reduce 255 by that much (12.5%), so that it can be increased noticeably to its max lightness (the top of the button);
+
 //// Likewise any incoming 0 will be increased so that the lowest percentage can be taken out with an appreciable reduction;
 const percentageArray = [-0.075, 0, 0.05, 0.1, 0.125]; // the percentages by which the color is stepped up or down
 
