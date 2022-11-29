@@ -16,7 +16,7 @@ import {
 // consider creating an interface for the paramsData
 
 export interface RotaryKnobProps {
-  onClick: React.DOMAttributes<HTMLDivElement>;
+  onClick?: React.DOMAttributes<HTMLDivElement>;
   diameter: number;
   labelCount: number; // the number of setting increments
   fillColor: string;
@@ -118,7 +118,7 @@ const RotaryKnob = (props: RotaryKnobProps) => {
     // here run the calculations for the labels (maybe should be in the first useEffect hook)
     const newTrigData: TrigData[] = getTrigonometricData(
       props.labelCount,
-      props.zeroAngle || 0
+      props.zeroAngle || 90
     );
     console.log("NTD:", newTrigData);
     const newCoordData = getCoordinateData(
